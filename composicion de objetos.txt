@@ -1,0 +1,19 @@
+peso: (string)
+	-imperial
+	-metrico
+altura: (string)
+	-imperial
+	-metrico
+identificacion: (number)
+nombre: (string)
+bred_for: (string)
+breed_group: (string)
+life_span: (string)
+temperamento: (string)
+origen: (string)
+reference_image_id: (string)
+imagen:
+	-id 	(string)
+	-ancho 	(number)
+	-altura	(number)
+	-url	(formatoURL)
