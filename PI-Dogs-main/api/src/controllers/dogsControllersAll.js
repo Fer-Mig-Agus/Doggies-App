@@ -20,7 +20,8 @@ const getBreeds = async (req, res) => {
                 weight: raza.weight.imperial,
                 life_span: raza.life_span,
                 image: raza.image.url,
-                temperament: raza.temperament
+                temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+
             }
         })
         //document: Esto trae los datos de la BDD
@@ -67,7 +68,7 @@ const getBreedsId = async (req, res) => {
                 height: OneRaza.height.imperial,
                 weight: OneRaza.weight.imperial,
                 life_span: OneRaza.life_span,
-                temperament: OneRaza.temperament,
+                temperament: OneRaza.temperament?.split(",").map(elemt => { return { name: elemt } }),
                 image: OneRaza.image.url,
             }
 
@@ -101,11 +102,8 @@ const getBreedsName = async (req, res) => {
 
 
 
-    const { name } = req.query;
+    let { name } = req.query;
     console.log(name);
-
-    const nameOnly = name.toUpperCase();
-    console.log(nameOnly)
 
     try {
 
@@ -120,15 +118,15 @@ const getBreedsName = async (req, res) => {
             }]
         });
 
-        const dogOne = razaDogs.find((dog) => dog.name.toUpperCase() == nameOnly);
+        const dogOne = razaDogs.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
 
         if (dogOne) return res.status(400).json(dogOne);
 
 
 
         const razas = await axios.get(`${URL_BASE}/v1/breeds?key=${APY_KEY}`)
-
-        const OneRaza = razas.data.find((raza) => raza.name.toUpperCase() == nameOnly);
+        // moneda.name.toLowerCase().includes(search.toLowerCase()) |
+        const OneRaza = razas.data.filter((raza) => raza.name.toLowerCase().includes(name.toLowerCase()));
 
         const razasOnly = {
             id: OneRaza.id ? OneRaza.id : undefined,
@@ -136,12 +134,12 @@ const getBreedsName = async (req, res) => {
             height: OneRaza.height.imperial,
             weight: OneRaza.weight.imperial,
             life_span: OneRaza.life_span,
-            temperament: OneRaza.temperament,
+            temperament: OneRaza.temperament?.split(",").map(elemt => { return { name: elemt } }),
             image: OneRaza.image.url,
         }
 
         res.status(200).json(razasOnly);
-    
+
 
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -227,5 +225,43 @@ module.exports = {
     createTemperament
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
