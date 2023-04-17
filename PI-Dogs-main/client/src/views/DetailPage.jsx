@@ -1,9 +1,10 @@
 import React from 'react'
+import Detail from "../components/Detail";
 
 const DetailPage = () => {
   return (
     <div>
-      <h1>detail page</h1>
+      <Detail />
     </div>
   )
 }

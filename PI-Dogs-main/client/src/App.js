@@ -1,15 +1,14 @@
 
 import './App.css';
 import { Routes, Route } from "react-router-dom";
-import LeandingPage from './views/LeandingPage';
-import HomePage from './views/HomePage';
-import FormPage from './views/FormPage';
-import DetailPage from './views/DetailPage';
+import LeandingPage from './views/LeandingPage.jsx';
+import HomePage from './views/HomePage.jsx';
+import FormPage from './views/FormPage.jsx';
+import DetailPage from './views/DetailPage.jsx';
 
 function App() {
   return (
     <div className="App">
-
 
       <Routes>
         
@@ -19,7 +18,6 @@ function App() {
         <Route path="/detail/:id" element={<DetailPage />} />
 
       </Routes>
-
 
     </div>
   );
