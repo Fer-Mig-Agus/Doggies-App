@@ -21,18 +21,6 @@ function App() {
       </Routes>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
   );
 }
