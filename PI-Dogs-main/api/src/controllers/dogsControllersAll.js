@@ -5,6 +5,27 @@ const { URL_BASE, APY_KEY } = process.env;
 const { Dog, Temperament } = require("../db/db");
 
 
+//important: Este trae los ids de los temperamentos de la BDD RUTA:/dogs/temperamets (get)
+const getAllIdsTemperaments=async (req,res)=>{
+    const {listTemperaments}=req.body;
+    
+    const newListTemp=[];
+    try {
+        for (let i = 0; i < listTemperaments.length; i++) {
+            console.log(listTemperaments[i]);
+            const temp = await Temperament.findOne({ where: { name: listTemperaments[i] } });
+            newListTemp.push(temp.id);
+        }
+
+        res.status(200).json(newListTemp);
+    } catch (error) {
+        res.status(400).json({error:error.message});
+    }
+   
+
+    
+}
+
 
 //important: Este trae los datos de las razas RUTA: /dogs (get)
 const getBreeds = async (req, res) => {
@@ -222,7 +243,8 @@ module.exports = {
     getBreedsId,
     getBreedsName,
     createNewDog,
-    createTemperament
+    createTemperament,
+    getAllIdsTemperaments
 
 }
 

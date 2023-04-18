@@ -8,7 +8,7 @@ require('dotenv').config();
 const { URL_BASE, APY_KEY } = process.env;
 
 
-const { getBreeds,getBreedsId,getBreedsName, createNewDog, createTemperament } =require("../controllers/dogsControllersAll");
+const { getBreeds, getBreedsId, getBreedsName, createNewDog, createTemperament, getAllIdsTemperaments } =require("../controllers/dogsControllersAll");
 
 //important:  Son en total 264 razas en la API
 
@@ -20,6 +20,8 @@ const router = Router();
 // 
 
 router.get("/dogs", getBreeds );
+
+router.get("/dogs/temperaments", getAllIdsTemperaments)
 
 router.get("/dogs/names", getBreedsName);
 

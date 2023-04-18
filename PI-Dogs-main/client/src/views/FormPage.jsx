@@ -14,6 +14,7 @@ function validate(state, errorsState) {
 
 	//document: validacion name
 	if (!state.name) errors.name = 'Nombre Vacio';
+	else if (!isNaN(state.name)) errors.name = 'No debe ser un numero';
 	else if (state.name.length > 30) errors.name = 'Supera los 35 caracteres';
 	else errors.name = '';
 
@@ -77,6 +78,13 @@ function validate(state, errorsState) {
 //important: Aqui termina la validacion
 
 const FormPage = () => {
+
+
+
+	const [selectedTemperaments, setSelectedTemperaments] = useState([]);
+
+
+
 	//Creo el estado para el formulario
 	const [form, setForm] = useState({
 		name: '',
@@ -102,6 +110,11 @@ const FormPage = () => {
 		life_spanMax: '',
 	});
 
+	const consultarNumerosTemperamentos=(temperants)=>{
+		//Aqui traer el array que corresponde a todos los ids
+	}
+
+
 	const navigate = useNavigate();
 
 	const URL_BASE = 'http://localhost:3001';
@@ -114,8 +127,24 @@ const FormPage = () => {
 		weightMin,
 		weightMax,
 		temperament,
-		life_span,
+		life_spanMax,
+		life_spanMin,
 	}) {
+
+		temperamentNumber = consultarNumerosTemperamentos(temperament);
+
+		const newDog={
+			name:name,
+			image:image,
+			height:`${heightMax} - ${heightMin}`,
+			weight:`${weightMax} - ${weightMin}`,
+			temperament: temperamentNumber,
+			life_span:`${life_spanMax} - ${life_spanMin}`
+		}
+
+
+
+
 		console.log('crearlo luego');
 		// console.log(email);
 		// console.log(password);
@@ -141,16 +170,19 @@ const FormPage = () => {
 	//Esta funcion va escribiendo en tiempo real
 	//los atributos del formulario en el estado
 
-	const handleChangeOption = (event) => {
-		setForm({...form,temperament:event.target.value})
-	};
+	
 	const handleChange = (event) => {
 		const property = event.target.name;
 		const value = event.target.value;
 	
-		setForm({ ...form, [property]: value });
-
-		setErrors(validate({ ...form, [property]: value }, errors));
+		setForm({ ...form, [property]: value, temperament:selectedTemperaments});
+		
+		setErrors(
+			validate(
+				{ ...form, [property]: value, temperament: selectedTemperaments },
+				errors,
+			),
+		);
 	};
 
 	const verificarCampos = ({
@@ -164,14 +196,14 @@ const FormPage = () => {
 		life_spanMin,
 		life_spanMax,
 	}) => {
-		console.log(temperament);
-		if (!name || name === '') return false;
+		
+		if (!name || name === '' || !isNaN(name)) return false;
 		if (!image || image === '') return false;
 		if (!heightMin || heightMin === '') return false;
 		if (!heightMax || heightMax === '') return false;
 		if (!weightMin || weightMin === '') return false;
 		if (!weightMax || weightMax === '') return false;
-		if (!temperament || temperament === '') return false;
+		if (!temperament || temperament.length === 0) return false;
 		if (!life_spanMin || life_spanMin === '') return false;
 		if (!life_spanMax || life_spanMax === '') return false;
 		return true;
@@ -190,8 +222,12 @@ const FormPage = () => {
 		if (parseInt(weightMax) <= parseInt(weightMin)) return false;
 		return true;
 	};
+
+
 	const submitHandler = (event) => {
-		event.preventDefault();
+
+		event.preventDefault();	
+
 		if (!verificarCampos(form)) {
 			setAlerta({ error: true, mensaje: 'Completa los campos' });
 			setTimeout(() => {
@@ -199,6 +235,7 @@ const FormPage = () => {
 			}, 2000);
 			return;
 		}
+
 		if (!verificarOrden(form)) {
 			setAlerta({ error: true, mensaje: 'Debe ser menor al maximo' });
 			setTimeout(() => {
@@ -207,6 +244,8 @@ const FormPage = () => {
 			return;
 		}
 
+		console.log(form);
+
 		createDog(form);
 	};
 
@@ -214,7 +253,30 @@ const FormPage = () => {
 	const { mensaje, error } = alerta;
 
 	//Trae todos los temperamentos
-	const allTemperaments = ['hola', 'como'];
+	const allTemperaments = ['hola', 'como',"estas"];
+
+	
+
+	const handleChangeOption = (event) => {
+	
+		const selectedTemperament = event.target.value;
+		if (event.target.checked) {
+			setSelectedTemperaments([...selectedTemperaments, selectedTemperament]);
+		} else {
+			setSelectedTemperaments(
+				selectedTemperaments.filter(
+					(temperament) => temperament !== selectedTemperament,
+				),
+			);
+		}
+	};
+
+
+	const resetAll=()=>{
+		
+		alert("volviendo...");
+	}
+
 
 	//  name,
 	// 	image,
@@ -330,12 +392,20 @@ const FormPage = () => {
 					<label className={styles.label} htmlFor="temperament">
 						Temperament:
 					</label>
-					<select name="" id="" onClick={handleChangeOption}>
-						<option value="">Default</option>
+					<div>
 						{allTemperaments.map((temperament) => {
-							return <option>{temperament}</option>;
+							return (
+								<div>
+									<input
+										type="checkbox"
+										value={temperament}
+										onChange={handleChangeOption}
+									/>
+									<label value="">{temperament}</label>
+								</div>
+							);
 						})}
-					</select>
+					</div>
 					{/* <input
 						placeholder="Temperament aqui...."
 						type="text"
@@ -380,6 +450,9 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.life_spanMin}</span>
 				</div>
+				<button className={styles.button} type="button" onClick={()=>resetAll()}>
+					Restaurar
+				</button>
 
 				<button className={styles.button} type="submit">
 					Create Dog
@@ -389,6 +462,48 @@ const FormPage = () => {
 				</Link>
 			</form>
 		</div>
+
+
+		// <div>
+		// 	<div>
+		// 		<input type="checkbox" name="" id="" />
+		// 		<label htmlFor="">bueno</label>
+		// 	</div>
+		// 	<div>
+		// 		<input type="malo" name="" id="" />
+		// 		<label htmlFor="">bueno</label>
+		// 	</div>
+		// 	<div>
+		// 		<input type="quieto" name="" id="" />
+		// 		<label htmlFor="">bueno</label>
+		// 	</div>
+		// 	<div>
+		// 		<input type="obediente" name="" id="" />
+		// 		<label htmlFor="">bueno</label>
+		// 	</div>
+		// </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	);
 };
 
