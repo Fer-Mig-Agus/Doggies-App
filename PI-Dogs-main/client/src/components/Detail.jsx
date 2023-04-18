@@ -6,7 +6,7 @@ const Detail = () => {
 
     const {id}=useParams();
 
-    const [dog,setDog]=useState();
+    const [dog,setDog]=useState({});
     
     const dogSearch=()=>{
 
@@ -15,7 +15,10 @@ const Detail = () => {
     <div>
         {
             dog.name ? 
-            <h1></h1>
+            <h1>{dog.name}</h1> :
+            <h3>Loading...</h3>
+
+
         }
       
     </div>
