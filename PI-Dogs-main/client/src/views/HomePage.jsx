@@ -1,11 +1,23 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import SearchBar from '../components/SearchBar';
 import Cards from '../components/Cards';
-import FormPage from "./FormPage";
+import { getAllDogs, getAllTemperaments } from '../redux/actions';
 import styles from '../assets/styles/components/views/HomePage.module.css';
 
 const HomePage = () => {
+	//Trae todos los temperamentos
+	const allTemperaments = useSelector((state) => state.temperaments);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getAllDogs());
+		dispatch(getAllTemperaments());
+	}, []);
+
 	// Funcion para buscar por el nombre
 	const searchFuntion = (name) => {
 		console.log(name);
@@ -16,8 +28,9 @@ const HomePage = () => {
 		console.log('todos los perros');
 	};
 
-	//Trae todos los temperamentos
-	const allTemperaments = ['hola', 'como'];
+	const resetAll = () => {
+		alert('volviendo...');
+	};
 
 	return (
 		<div className={styles.content}>
@@ -58,7 +71,13 @@ const HomePage = () => {
 							})}
 						</select>
 					</div>
-
+					<button
+						className={styles.button}
+						type="button"
+						onClick={() => resetAll()}
+					>
+						Restaurar
+					</button>
 					<Link to="/form">
 						<button>Crear</button>
 					</Link>

@@ -6,84 +6,34 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ErrorComun from '../components/ErrorComun';
+import { getAllTemperamentsIds, getAllTemperaments } from '../redux/actions';
 import axios from 'axios';
-
-//important: Aqui esta la validacion de los campos
-function validate(state, errorsState) {
-	const errors = { ...errorsState };
-
-	//document: validacion name
-	if (!state.name) errors.name = 'Nombre Vacio';
-	else if (!isNaN(state.name)) errors.name = 'No debe ser un numero';
-	else if (state.name.length > 30) errors.name = 'Supera los 35 caracteres';
-	else errors.name = '';
-
-	//document: validacion image
-	if (!state.image) errors.image = 'Imagen Vacio';
-	else if (
-		!/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
-			state.image,
-		)
-	)
-		errors.image = 'URL no valida (falta http/https)';
-	else errors.image = '';
-
-	//document: validacion altura max
-	if (!state.heightMax) errors.heightMax = 'Altura maxima Vacio';
-	else if (isNaN(state.heightMax)) errors.heightMax = 'Debe ser un numero';
-	else errors.heightMax = '';
-	//document: validacion altura min
-	if (!state.heightMin) errors.heightMin = 'Altura minima Vacio';
-	else if (isNaN(state.heightMin)) errors.heightMin = 'Debe ser un numero';
-	else if (
-		state.heightMax &&
-		parseInt(state.heightMax) <= parseInt(state.heightMin)
-	)
-		errors.heightMin = 'Debe ser menor al maximo';
-	else errors.heightMin = '';
-
-	//document: validacion peso max
-	if (!state.weightMax) errors.weightMax = 'Peso minimo Vacio';
-	else if (isNaN(state.weightMax)) errors.weightMax = 'Debe ser un numero';
-	else errors.weightMax = '';
-	//document: validacion peso min
-	if (!state.weightMin) errors.weightMin = 'Peso minimo Vacio';
-	else if (isNaN(state.weightMin)) errors.weightMin = 'Debe ser un numero';
-	else if (
-		state.weightMax &&
-		parseInt(state.weightMax) <= parseInt(state.weightMin)
-	)
-		errors.weightMin = 'Debe ser menor al maximo';
-	else errors.weightMin = '';
-
-	//document: validacion años de vida max
-	if (!state.life_spanMax) errors.life_spanMax = 'Años de vida maximo Vacio';
-	else if (isNaN(state.life_spanMax))
-		errors.life_spanMax = 'Debe ser un numero';
-	else errors.life_spanMax = '';
-	//document: validacion años de vida min
-	if (!state.life_spanMin) errors.life_spanMin = 'Años de vida minimo Vacio';
-	else if (isNaN(state.life_spanMin))
-		errors.life_spanMin = 'Debe ser un numero';
-	else if (
-		state.life_spanMax &&
-		parseInt(state.life_spanMax) <= parseInt(state.life_spanMin)
-	)
-		errors.life_spanMin = 'Debe ser menor al maximo';
-	else errors.life_spanMin = '';
-
-	return errors;
-}
+import { verificarCampos, verificarOrden, validate } from './validateFormPage';
 
 //important: Aqui termina la validacion
 
 const FormPage = () => {
+	const mostrandoMensajeError = (error, mensaje) => {
+		setAlerta({ error: error, mensaje: mensaje });
+		setTimeout(() => {
+			setAlerta({});
+		}, 2000);
+		return;
+	};
 
-
+	const URL_BASE = 'http://localhost:3001';
 
 	const [selectedTemperaments, setSelectedTemperaments] = useState([]);
+	const [ids, setIds] = useState([]);
 
+	const dispatch = useDispatch();
 
+	//Trae todos los temperamentos
+	const allTemperaments = useSelector((state) => state.temperaments);
+
+	useEffect(() => {
+		dispatch(getAllTemperaments());
+	}, []);
 
 	//Creo el estado para el formulario
 	const [form, setForm] = useState({
@@ -110,15 +60,22 @@ const FormPage = () => {
 		life_spanMax: '',
 	});
 
-	const consultarNumerosTemperamentos=(temperants)=>{
-		//Aqui traer el array que corresponde a todos los ids
-	}
+	const allIdsNames = async (arrayNames) => {
+		let listTemperament = { listTemperaments: arrayNames };
+		const idReturn = await axios.put(
+			`${URL_BASE}/dogs/temperaments`,
+			listTemperament,
+		);
+		setIds(idReturn.data);
+	};
 
+	useEffect(() => {
+		allIdsNames(selectedTemperaments);
+	}, [selectedTemperaments]);
 
 	const navigate = useNavigate();
 
-	const URL_BASE = 'http://localhost:3001';
-
+	//important: Fijarme este metodo falta terminar
 	async function createDog({
 		name,
 		image,
@@ -130,53 +87,54 @@ const FormPage = () => {
 		life_spanMax,
 		life_spanMin,
 	}) {
+		const newDog = {
+			name: name,
+			image: image,
+			height: `${heightMax} - ${heightMin}`,
+			weight: `${weightMax} - ${weightMin}`,
+			temperament: ids,
+			life_span: `${life_spanMax} - ${life_spanMin} years`,
+		};
 
-		temperamentNumber = consultarNumerosTemperamentos(temperament);
+		console.log(newDog)
 
-		const newDog={
-			name:name,
-			image:image,
-			height:`${heightMax} - ${heightMin}`,
-			weight:`${weightMax} - ${weightMin}`,
-			temperament: temperamentNumber,
-			life_span:`${life_spanMax} - ${life_spanMin}`
-		}
+		await axios
+			.post(`${URL_BASE}/dogs`, newDog)
+			.then((res) => {
+				console.log('creado con exito');
+				mostrandoMensajeError(false,"Creado con exito");
+				setForm({
+					name: '',
+					image: '',
+					heightMin: '',
+					heightMax: '',
+					weightMin: '',
+					weightMax: '',
+					temperament: '',
+					life_spanMin: '',
+					life_spanMax: '',
+				});
+				setSelectedTemperaments([]);
+				
+				
+			})
+			.catch((error) => {
+				console.log("hubo un error")
+				console.log(error);
+			});
 
-
-
-
-		console.log('crearlo luego');
-		// console.log(email);
-		// console.log(password);
-		// await axios
-		// 	.get(`${URL_BASE}/login?email=${email}&password=${password}`)
-		// 	.then((res) => {
-		// 		console.log('entro...');
-		// 		console.log(res);
-		// 		dispatch(setAccess(true));
-		// 		navigate('/home');
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log('dio error');
-		// 		console.log(error);
-		// 		dispatch(setAccess(false));
-		// 		setAlerta({ error: true, mensaje: 'Correo o Contraseña incorrecta' });
-		// 		setTimeout(() => {
-		// 			setAlerta({});
-		// 		}, 2000);
-		// 	});
+		
 	}
 
 	//Esta funcion va escribiendo en tiempo real
 	//los atributos del formulario en el estado
 
-	
 	const handleChange = (event) => {
 		const property = event.target.name;
 		const value = event.target.value;
-	
-		setForm({ ...form, [property]: value, temperament:selectedTemperaments});
-		
+
+		setForm({ ...form, [property]: value, temperament: selectedTemperaments });
+
 		setErrors(
 			validate(
 				{ ...form, [property]: value, temperament: selectedTemperaments },
@@ -185,66 +143,18 @@ const FormPage = () => {
 		);
 	};
 
-	const verificarCampos = ({
-		name,
-		image,
-		heightMin,
-		heightMax,
-		weightMin,
-		weightMax,
-		temperament,
-		life_spanMin,
-		life_spanMax,
-	}) => {
-		
-		if (!name || name === '' || !isNaN(name)) return false;
-		if (!image || image === '') return false;
-		if (!heightMin || heightMin === '') return false;
-		if (!heightMax || heightMax === '') return false;
-		if (!weightMin || weightMin === '') return false;
-		if (!weightMax || weightMax === '') return false;
-		if (!temperament || temperament.length === 0) return false;
-		if (!life_spanMin || life_spanMin === '') return false;
-		if (!life_spanMax || life_spanMax === '') return false;
-		return true;
-	};
-
-	const verificarOrden = ({
-		heightMin,
-		heightMax,
-		weightMin,
-		weightMax,
-		life_spanMin,
-		life_spanMax,
-	}) => {
-		if (parseInt(life_spanMax) <= parseInt(life_spanMin)) return false;
-		if (parseInt(heightMax) <= parseInt(heightMin)) return false;
-		if (parseInt(weightMax) <= parseInt(weightMin)) return false;
-		return true;
-	};
-
-
 	const submitHandler = (event) => {
-
-		event.preventDefault();	
+		event.preventDefault();
 
 		if (!verificarCampos(form)) {
-			setAlerta({ error: true, mensaje: 'Completa los campos' });
-			setTimeout(() => {
-				setAlerta({});
-			}, 2000);
+			mostrandoMensajeError(true, 'Completa los campos');
 			return;
 		}
 
 		if (!verificarOrden(form)) {
-			setAlerta({ error: true, mensaje: 'Debe ser menor al maximo' });
-			setTimeout(() => {
-				setAlerta({});
-			}, 2000);
+			mostrandoMensajeError(true, 'Debe ser menor al maximo');
 			return;
 		}
-
-		console.log(form);
 
 		createDog(form);
 	};
@@ -252,13 +162,7 @@ const FormPage = () => {
 	const [alerta, setAlerta] = useState({});
 	const { mensaje, error } = alerta;
 
-	//Trae todos los temperamentos
-	const allTemperaments = ['hola', 'como',"estas"];
-
-	
-
 	const handleChangeOption = (event) => {
-	
 		const selectedTemperament = event.target.value;
 		if (event.target.checked) {
 			setSelectedTemperaments([...selectedTemperaments, selectedTemperament]);
@@ -270,13 +174,6 @@ const FormPage = () => {
 			);
 		}
 	};
-
-
-	const resetAll=()=>{
-		
-		alert("volviendo...");
-	}
-
 
 	//  name,
 	// 	image,
@@ -392,7 +289,7 @@ const FormPage = () => {
 					<label className={styles.label} htmlFor="temperament">
 						Temperament:
 					</label>
-					<div>
+					<div className={styles.boxTemperaments}>
 						{allTemperaments.map((temperament) => {
 							return (
 								<div>
@@ -406,16 +303,7 @@ const FormPage = () => {
 							);
 						})}
 					</div>
-					{/* <input
-						placeholder="Temperament aqui...."
-						type="text"
-						name="temperament"
-						value={form.temperament}
-						onChange={handleChange}
-						className={`${
-							errors.temperament ? styles.error : styles.success
-						}  ${styles.input}`}
-					/> */}
+					
 					<span className={styles.errorSpan}>{errors.temperament}</span>
 				</div>
 				<div className={styles.life_spanMax}>
@@ -450,9 +338,6 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.life_spanMin}</span>
 				</div>
-				<button className={styles.button} type="button" onClick={()=>resetAll()}>
-					Restaurar
-				</button>
 
 				<button className={styles.button} type="submit">
 					Create Dog
@@ -462,7 +347,6 @@ const FormPage = () => {
 				</Link>
 			</form>
 		</div>
-
 
 		// <div>
 		// 	<div>
@@ -482,28 +366,6 @@ const FormPage = () => {
 		// 		<label htmlFor="">bueno</label>
 		// 	</div>
 		// </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	);
 };
 

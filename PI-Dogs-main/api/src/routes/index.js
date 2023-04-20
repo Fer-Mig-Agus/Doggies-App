@@ -21,7 +21,7 @@ const router = Router();
 
 router.get("/dogs", getBreeds );
 
-router.get("/dogs/temperaments", getAllIdsTemperaments)
+router.put("/dogs/temperaments", getAllIdsTemperaments)
 
 router.get("/dogs/names", getBreedsName);
 
