@@ -1,0 +1,11 @@
+.pageNumbers{
+    list-style: none;
+    display: flex;
+
+}
+
+.pageNumbers li{
+    padding: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+}

@@ -10,11 +10,20 @@ import styles from '../assets/styles/components/views/HomePage.module.css';
 import Pagination from '../components/Pagination';
 
 const HomePage = () => {
+	
+	
+	const dispatch=useDispatch();
 
+	useEffect(()=>{
+		dispatch(getAllDogs());
+		dispatch(getAllTemperaments());
+	},[])
+
+	console.log("esta en el home, se cargo el estado global dogs")
 	
 	return (
 		<div className={styles.content}>
-			<h1>home page</h1>
+			<h1 className={styles.titleMain}>Bienvenido estas son todas la razas disponibles</h1>
 			<AllFilters />
 			<Pagination />
 			

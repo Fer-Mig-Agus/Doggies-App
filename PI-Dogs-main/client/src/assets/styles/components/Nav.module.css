@@ -1,0 +1,21 @@
+.contentLink{
+    display: flex;
+    /* //width: 100%; */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* position: fixed; */
+    background: rgba(0,0,0,0.3);
+    
+}
+
+
+.link{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    
+}

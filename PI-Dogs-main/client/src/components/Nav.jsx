@@ -5,10 +5,10 @@ import styles from "../assets/styles/components/Nav.module.css";
 const Nav = () => {
   return (
     <div>
-        <div>
-            <Link to="/home"><h3>Home</h3></Link>
-            <Link to="/form"><h3>Create</h3></Link>
-            <Link to="/about"><h3>About me</h3></Link>
+        <div className={styles.contentLink}>
+            <Link to="/home"><h3 className={styles.link}>Home</h3></Link>
+            <Link to="/form"><h3 className={styles.link}>Create</h3></Link>
+            <Link to="/about"><h3 className={styles.link}>About me</h3></Link>
         </div>
     </div>
   )

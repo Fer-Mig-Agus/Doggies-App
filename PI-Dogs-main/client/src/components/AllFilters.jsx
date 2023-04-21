@@ -28,8 +28,8 @@ const AllFilters = () => {
 	};
 
 	return (
-		<div>
-			<div>
+		<div className={styles.contentMain}>
+			<div className={styles.contentButtonFilters}>
 				<div>
 					<h3>Personajes:</h3>
 					<select name="" id="">
@@ -55,9 +55,9 @@ const AllFilters = () => {
 						<option value="">Minimo</option>
 					</select>
 				</div>
-				<div>
+				<div className={styles.contentFilterTemperaments}>
 					<h3>Temperamentos:</h3>
-					<select name="" id="">
+					<select name="" id="" className={styles.selectTemperaments}>
 						<option value="">Default</option>
 						{allTemperaments.map((temperament) => {
 							return <option>{temperament}</option>;
@@ -75,7 +75,7 @@ const AllFilters = () => {
 					<button>Crear</button>
 				</Link>
 			</div>
-			<div>
+			<div className={styles.searchBar}>
 				<SearchBar searchFuntion={searchFuntion} />
 			</div>
 		</div>
