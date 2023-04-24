@@ -1,11 +1,12 @@
 //important: Aqui esta la validacion de los campos
-function validate(state, errorsState) {
+export  function validate(state, errorsState) {
+    
     const errors = { ...errorsState };
 
     //document: validacion name
     if (!state.name) errors.name = 'Nombre Vacio';
     else if (!isNaN(state.name)) errors.name = 'No debe ser un numero';
-    else if (state.name.length > 30) errors.name = 'Supera los 35 caracteres';
+    else if (state.name.length > 30) errors.name = 'Supera los 30 caracteres';
     else errors.name = '';
 
     //document: validacion image
@@ -65,7 +66,7 @@ function validate(state, errorsState) {
     return errors;
 }
 
-const verificarCampos = ({
+export const verificarCampos = ({
     name,
     image,
     heightMin,
@@ -82,13 +83,13 @@ const verificarCampos = ({
     if (!heightMax || heightMax === '') return false;
     if (!weightMin || weightMin === '') return false;
     if (!weightMax || weightMax === '') return false;
-    if (!temperament || temperament.length === 0) return false;
+   // if (!temperament || temperament.length === 0) return false;
     if (!life_spanMin || life_spanMin === '') return false;
     if (!life_spanMax || life_spanMax === '') return false;
     return true;
 };
 
-const verificarOrden = ({
+export const verificarOrden = ({
     heightMin,
     heightMax,
     weightMin,
@@ -103,8 +104,8 @@ const verificarOrden = ({
 };
 
 
-module.exports={
-    verificarCampos,
-    verificarOrden,
-    validate
-}
+// module.exports={
+//     verificarCampos,
+//     verificarOrden,
+//     validate
+// }

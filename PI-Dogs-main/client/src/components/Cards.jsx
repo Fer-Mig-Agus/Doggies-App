@@ -18,6 +18,7 @@ const Cards = ({allDogs}) => {
 							return (
 								<Card
 									key={id}
+									id={id}
 									name={name}
 									image={image}
 									height={height}

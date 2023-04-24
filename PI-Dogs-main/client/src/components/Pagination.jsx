@@ -7,9 +7,14 @@ import Cards from './Cards';
 
 const Pagination = () => {
 
+
 	const allDogs = useSelector((state) => state.copyDogs);
 
-	
+	console.log(typeof allDogs);
+
+	// useEffect(()=>{
+		
+	// },[allDogs])
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [itemsPerPage, setItemPerPage] = useState(8);

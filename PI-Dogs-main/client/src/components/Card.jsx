@@ -15,28 +15,29 @@ const Card = ({
 }) => {
 
 	
+
+	
 	return (
 		<div className={styles.content}>
-			<div>
+			<div className={styles.contentImage}>
 				<img src={image} alt={name} title={id} />
 			</div>
-			<button
+			{/* <button
 				className={styles.button}
 				onClick={() => {
 					close(id);
 				}}
 			>
 				X
-			</button>
-			<Link to={`/detail/:${id}`}>
-				<h3>{name}</h3>
+			</button> */}
+			<Link to={`/detail/${id}`}>
+				
+				<h3>Name:<br />{name}</h3>
 			</Link>
-
-			 <h4>{temperaments}</h4>;
-
-			<h5>{life_span}</h5>
-			<p>{weight}</p>
-			<p>{height}</p>
+			<h4>Temperamentos: {temperaments}</h4>;
+			<h5>Tiempo de vida: {life_span}</h5>
+			<p>Peso: {weight}</p>
+			<p>Altura: {height}</p>
 		</div>
 	);
 };

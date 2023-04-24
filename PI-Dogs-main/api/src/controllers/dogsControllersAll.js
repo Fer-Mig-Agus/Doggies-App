@@ -52,7 +52,7 @@ const getBreeds = async (req, res) => {
             }]
         });
 
-        const cleanDogs=dogs.map((raza) => {
+        const cleanDogs = dogs.map((raza) => {
             return {
                 id: raza.id,
                 name: raza.name,
@@ -117,20 +117,19 @@ const getBreedsId = async (req, res) => {
             }]
         });
 
-        const cleanDogs = razaDogs.map((raza) => {
-            return {
-                id: razaDogs.id,
-                name: razaDogs.name,
-                height: razaDogs.height,
-                weight: razaDogs.weight,
-                life_span: razaDogs.life_span,
-                image: razaDogs.image,
-                temperaments: razaDogs.temperaments.map(obj => obj.name).join(', '),
-                //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
-            }
-        });
+        const cleanDogs = {
+            id: razaDogs.id,
+            name: razaDogs.name,
+            height: razaDogs.height,
+            weight: razaDogs.weight,
+            life_span: razaDogs.life_span,
+            image: razaDogs.image,
+            temperaments: razaDogs.temperaments.map(obj => obj.name).join(', '),
+            //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+        }
 
-        res.status(400).json(cleanDogs);
+
+        res.status(200).json(cleanDogs);
 
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -164,21 +163,21 @@ const getBreedsName = async (req, res) => {
 
         const cleanDogs = razaDogs.map((raza) => {
             return {
-                id: razaDogs.id,
-                name: razaDogs.name,
-                height: razaDogs.height,
-                weight: razaDogs.weight,
-                life_span: razaDogs.life_span,
-                image: razaDogs.image,
-                temperaments: razaDogs.temperaments.map(obj => obj.name).join(', '),
+                id: raza.id,
+                name: raza.name,
+                height: raza.height,
+                weight: raza.weight,
+                life_span: raza.life_span,
+                image: raza.image,
+                temperaments: raza.temperaments.map(obj => obj.name).join(', '),
                 //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
             }
         });
 
-       // const dogOne = razaDogs.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
+        // const dogOne = razaDogs.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
 
         const razas = await axios.get(`${URL_BASE}/v1/breeds?key=${APY_KEY}`)
-        
+
         //const OneRaza = razas.data.filter((raza) => raza.name.toLowerCase().includes(name.toLowerCase()));
 
         const razasOnly = razas.data.map(raza => {
@@ -195,7 +194,7 @@ const getBreedsName = async (req, res) => {
             }
         })
 
-        const response = [...cleanDogs,...razasOnly];
+        const response = [...cleanDogs, ...razasOnly];
 
         const responseClean = response.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
 
@@ -212,9 +211,6 @@ const getBreedsName = async (req, res) => {
 //important: Crear un nuevo perro  RUTA: /dogs (post)
 const createNewDog = async (req, res) => {
     const { name, height, weight, life_span, image, temperament } = req.body;
-    console.log("entro al creador, estos son los datos del body");
-
-    console.log(name);
 
     try {
 
@@ -254,15 +250,17 @@ const createNewDog = async (req, res) => {
                 life_span: raza.life_span,
                 image: raza.image,
                 temperaments: raza.temperaments.map(obj => obj.name).join(', '),
-               
+
             }
         });
 
         const response = [...cleanDogs, ...razasOnly]
 
         const verificarName = response.filter((dog) => dog.name.toLowerCase() === name.toLowerCase());
-        if(verificarName) return res.status(400).json({error: "Ya exite la raza"});
-        
+        console.log(verificarName);
+        if (verificarName.length !== 0) return res.status(400).json({ error: "Ya exite la raza" });
+
+
         const dog = await Dog.create({ name, height, weight, life_span, image });
 
         dog.addTemperament(temperament);

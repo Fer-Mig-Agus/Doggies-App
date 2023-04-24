@@ -1,0 +1,14 @@
+@font-face{
+    font-family: iconsDogs;
+    src: url("../../fonts/can_dog_tfb/canDogTfb.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: adelia;
+    src: url("../../fonts/adelia/ADELIA.otf") format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+

@@ -120,8 +120,9 @@ const FormPage = () => {
 				
 			})
 			.catch((error) => {
-				console.log("hubo un error")
-				console.log(error);
+				
+				mostrandoMensajeError(true,"La raza ya existe!");
+				
 			});
 
 		
@@ -304,7 +305,7 @@ const FormPage = () => {
 							);
 						})}
 					</div>
-					
+
 					<span className={styles.errorSpan}>{errors.temperament}</span>
 				</div>
 				<div className={styles.life_spanMax}>

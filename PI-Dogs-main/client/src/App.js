@@ -41,7 +41,7 @@ function App() {
         <Route path="/" element={<LeandingPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/form" element={<FormPage />} />
-        <Route path="/detail/:id" element={<DetailPage />} />
+        <Route path="//detail/:id" element={<DetailPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="*" element={<ErrorPage />} />
 

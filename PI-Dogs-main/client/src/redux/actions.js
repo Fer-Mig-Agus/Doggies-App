@@ -9,6 +9,7 @@ export const FILTER_TEMPERAMENTS ="FILTER_TEMPERAMENTS";
 export const FILTER_ORIGEN ="FILTER_ORIGEN";
 export const FILTER_ORDER ="FILTER_ORDER";
 export const FILTER_PESO ="FILTER_PESO";
+export const GET_DOG_BY_ID ="GET_DOG_BY_ID";
 //export const GET_ALL_TEMPERAMENTS_IDS ="GET_ALL_TEMPERAMENTS_IDS";
 
 const URL_BASE = "http://localhost:3001"
@@ -61,6 +62,7 @@ export const filterOrigen=(origen)=>{
 }
 
 export const filterOrden=(orden)=>{
+    
     return {type: FILTER_ORDER,payload:orden};
 }
 
