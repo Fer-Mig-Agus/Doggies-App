@@ -14,7 +14,7 @@ const Card = ({
 	close,
 }) => {
 
-	console.log("estos son los temperamentos : ",temperaments)
+	
 	return (
 		<div className={styles.content}>
 			<div>
@@ -28,15 +28,12 @@ const Card = ({
 			>
 				X
 			</button>
-			<Link to={`/detail/${id}`}>
+			<Link to={`/detail/:${id}`}>
 				<h3>{name}</h3>
 			</Link>
-			{
-				temperaments?.map((temp)=>{
-					return <h4>{temp.name}</h4>
-				})
-			}
-			
+
+			 <h4>{temperaments}</h4>;
+
 			<h5>{life_span}</h5>
 			<p>{weight}</p>
 			<p>{height}</p>

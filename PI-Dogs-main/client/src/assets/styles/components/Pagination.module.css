@@ -1,11 +1,37 @@
 .pageNumbers{
     list-style: none;
     display: flex;
-
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .pageNumbers li{
     padding: 10px;
+    font-size: 20px;
     border: 1px solid black;
     cursor: pointer;
+}
+
+.active{
+    background-color: black;
+    color: white;
+
+}
+.buttonPagination{
+    background-color: transparent;
+    border: none;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.buttonPagination:hover{
+    background-color: black;
+    color: white;
+
+}
+
+.buttonPagination:focus{
+    outline: none;
 }

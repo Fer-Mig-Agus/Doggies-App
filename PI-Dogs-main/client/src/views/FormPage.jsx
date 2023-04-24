@@ -114,6 +114,7 @@ const FormPage = () => {
 					life_spanMin: '',
 					life_spanMax: '',
 				});
+				//fijarme como borrar los selecionados
 				setSelectedTemperaments([]);
 				
 				
@@ -292,7 +293,7 @@ const FormPage = () => {
 					<div className={styles.boxTemperaments}>
 						{allTemperaments.map((temperament) => {
 							return (
-								<div>
+								<div key={temperament}>
 									<input
 										type="checkbox"
 										value={temperament}

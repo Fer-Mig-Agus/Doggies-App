@@ -1,13 +1,27 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styles from '../assets/styles/components/SearchBar.module.css';
+import { filterSearchByName } from '../redux/actions.js';
 
-const SearchBar = ({ searchFuntion }) => {
+const SearchBar = () => {
+
+	const dispatch=useDispatch();
+
 	const [search, setSearch] = useState('');
+	const [searchBtn,setSearchBtn]=useState('');
 
+	//para el input
 	const handleValue = (event) => {
 		setSearch(event.target.value);
 	};
+
+	//para el btn cuando hace click
+	const handleSearch=(event)=>{
+		event.preventDefault();		
+		dispatch(filterSearchByName(search));
+	}
+
 	return (
 		<div className={styles.content}>
 			<div className={styles.search}>
@@ -23,9 +37,7 @@ const SearchBar = ({ searchFuntion }) => {
 						<div className={styles.searchBoxIcon}>
 							<button
 								className={styles.btnIconContent}
-								onClick={() => {
-									searchFuntion(search);
-								}}
+								onClick={handleSearch}
 							>
 								<i className={styles.searchIcon}>
 									<svg

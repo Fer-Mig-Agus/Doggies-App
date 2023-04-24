@@ -6,9 +6,9 @@ const { Dog, Temperament } = require("../db/db");
 
 
 //important: Este trae los ids de los temperamentos de la BDD RUTA:/dogs/temperamets (get)
-const getAllIdsTemperaments=async (req,res)=>{
-    const {listTemperaments}=req.body;
-    const newListTemp=[];
+const getAllIdsTemperaments = async (req, res) => {
+    const { listTemperaments } = req.body;
+    const newListTemp = [];
     try {
         for (let i = 0; i < listTemperaments.length; i++) {
             const temp = await Temperament.findOne({ where: { name: listTemperaments[i] } });
@@ -16,7 +16,7 @@ const getAllIdsTemperaments=async (req,res)=>{
         }
         res.status(200).json(newListTemp);
     } catch (error) {
-        res.status(400).json({error:error.message});
+        res.status(400).json({ error: error.message });
     }
 }
 
@@ -35,7 +35,9 @@ const getBreeds = async (req, res) => {
                 weight: raza.weight.imperial,
                 life_span: raza.life_span,
                 image: raza.image.url,
-                temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+                temperaments: raza.temperament,
+                //temperaments: raza.temperaments.map(obj => obj.name).join(', '),
+                //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
 
             }
         })
@@ -50,7 +52,20 @@ const getBreeds = async (req, res) => {
             }]
         });
 
-        const response = [...dogs, ...razasOnly]
+        const cleanDogs=dogs.map((raza) => {
+            return {
+                id: raza.id,
+                name: raza.name,
+                height: raza.height,
+                weight: raza.weight,
+                life_span: raza.life_span,
+                image: raza.image,
+                temperaments: raza.temperaments.map(obj => obj.name).join(', '),
+                //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+            }
+        });
+
+        const response = [...cleanDogs, ...razasOnly]
 
         res.json(response).status(200);
 
@@ -60,7 +75,7 @@ const getBreeds = async (req, res) => {
 }
 
 
-//important: Este trae todos los datos de una determinada raza RUTA: /dogs/names (get)
+//important: Este trae todos los datos de una determinada raza RUTA: /dogs/:id (get)
 const getBreedsId = async (req, res) => {
 
     const { idRaza } = req.params;
@@ -83,7 +98,8 @@ const getBreedsId = async (req, res) => {
                 height: OneRaza.height.imperial,
                 weight: OneRaza.weight.imperial,
                 life_span: OneRaza.life_span,
-                temperament: OneRaza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+                temperaments: OneRaza.temperament,
+                //temperament: OneRaza.temperament?.split(",").map(elemt => { return { name: elemt } }),
                 image: OneRaza.image.url,
             }
 
@@ -101,7 +117,20 @@ const getBreedsId = async (req, res) => {
             }]
         });
 
-        (res.status(400).json(razaDogs));
+        const cleanDogs = razaDogs.map((raza) => {
+            return {
+                id: razaDogs.id,
+                name: razaDogs.name,
+                height: razaDogs.height,
+                weight: razaDogs.weight,
+                life_span: razaDogs.life_span,
+                image: razaDogs.image,
+                temperaments: razaDogs.temperaments.map(obj => obj.name).join(', '),
+                //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+            }
+        });
+
+        res.status(400).json(cleanDogs);
 
     } catch (error) {
         res.status(404).json({ error: error.message });
@@ -118,7 +147,7 @@ const getBreedsName = async (req, res) => {
 
 
     let { name } = req.query;
-    console.log(name);
+
 
     try {
 
@@ -133,27 +162,44 @@ const getBreedsName = async (req, res) => {
             }]
         });
 
-        const dogOne = razaDogs.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
+        const cleanDogs = razaDogs.map((raza) => {
+            return {
+                id: razaDogs.id,
+                name: razaDogs.name,
+                height: razaDogs.height,
+                weight: razaDogs.weight,
+                life_span: razaDogs.life_span,
+                image: razaDogs.image,
+                temperaments: razaDogs.temperaments.map(obj => obj.name).join(', '),
+                //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+            }
+        });
 
-        if (dogOne) return res.status(400).json(dogOne);
-
-
+       // const dogOne = razaDogs.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
 
         const razas = await axios.get(`${URL_BASE}/v1/breeds?key=${APY_KEY}`)
-        // moneda.name.toLowerCase().includes(search.toLowerCase()) |
-        const OneRaza = razas.data.filter((raza) => raza.name.toLowerCase().includes(name.toLowerCase()));
+        
+        //const OneRaza = razas.data.filter((raza) => raza.name.toLowerCase().includes(name.toLowerCase()));
 
-        const razasOnly = {
-            id: OneRaza.id ? OneRaza.id : undefined,
-            name: OneRaza.name,
-            height: OneRaza.height.imperial,
-            weight: OneRaza.weight.imperial,
-            life_span: OneRaza.life_span,
-            temperament: OneRaza.temperament?.split(",").map(elemt => { return { name: elemt } }),
-            image: OneRaza.image.url,
-        }
+        const razasOnly = razas.data.map(raza => {
+            return {
+                id: raza.id,
+                name: raza.name,
+                height: raza.height.imperial,
+                weight: raza.weight.imperial,
+                life_span: raza.life_span,
+                temperaments: raza.temperament,
+                //temperaments: raza.temperaments.map(obj => obj.name).join(', '),
+                //temperament: raza.temperament?.split(",").map(elemt => { return { name: elemt } }),
+                image: raza.image.url,
+            }
+        })
 
-        res.status(200).json(razasOnly);
+        const response = [...cleanDogs,...razasOnly];
+
+        const responseClean = response.filter((dog) => dog.name.toLowerCase().includes(name.toLowerCase()));
+
+        res.status(200).json(responseClean);
 
 
     } catch (error) {
@@ -167,11 +213,56 @@ const getBreedsName = async (req, res) => {
 const createNewDog = async (req, res) => {
     const { name, height, weight, life_span, image, temperament } = req.body;
     console.log("entro al creador, estos son los datos del body");
-    
+
     console.log(name);
 
     try {
-    
+
+        //important:Primero voy a verificar que no exista
+
+        //document: Esto busca en la API
+        const razas = await axios.get(`${URL_BASE}/v1/breeds?key=${APY_KEY}`)
+        const razasOnly = razas.data.map((raza) => {
+            return {
+                id: raza.id,
+                name: raza.name,
+                height: raza.height.imperial,
+                weight: raza.weight.imperial,
+                life_span: raza.life_span,
+                image: raza.image.url,
+                temperaments: raza.temperament,
+
+            }
+        })
+        //document: Esto trae los datos de la BDD
+        const dogs = await Dog.findAll({
+            include: [{
+                model: Temperament,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
+            }]
+        });
+
+        const cleanDogs = dogs.map((raza) => {
+            return {
+                id: raza.id,
+                name: raza.name,
+                height: raza.height,
+                weight: raza.weight,
+                life_span: raza.life_span,
+                image: raza.image,
+                temperaments: raza.temperaments.map(obj => obj.name).join(', '),
+               
+            }
+        });
+
+        const response = [...cleanDogs, ...razasOnly]
+
+        const verificarName = response.filter((dog) => dog.name.toLowerCase() === name.toLowerCase());
+        if(verificarName) return res.status(400).json({error: "Ya exite la raza"});
+        
         const dog = await Dog.create({ name, height, weight, life_span, image });
 
         dog.addTemperament(temperament);

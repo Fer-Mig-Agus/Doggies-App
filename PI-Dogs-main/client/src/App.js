@@ -13,10 +13,7 @@ import ErrorPage from './views/ErrorPage';
 function App() {
 
   const {pathname}=useLocation();
-  console.log(pathname)
 
-
-  
   const verificarRuta = () => {
 
     switch (pathname) {
