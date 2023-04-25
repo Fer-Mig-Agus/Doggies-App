@@ -5,34 +5,39 @@ import styles from '../assets/styles/components/Pagination.module.css';
 import Cards from './Cards';
 
 const Pagination = () => {
-
+	//Aqui traigo todos los perros, pero uso la copia
 	const allDogs = useSelector((state) => state.copyDogs);
 
+	//Estados para controlar la paginacion
 	const [currentPage, setCurrentPage] = useState(1);
 	const [itemsPerPage, setItemPerPage] = useState(8);
 	const [pageNumerLimit, setPageNumerLimit] = useState(8);
 	const [maxPageNumerLimit, setMaxPageNumerLimit] = useState(8);
 	const [minPageNumerLimit, setMinPageNumerLimit] = useState(0);
 
+	//funcion para controlar controlar la paginacion,
+	// se activa haciendo click sobre el numero
 	const handleClick = (event) => {
 		setCurrentPage(Number(event.target.id));
 	};
 
+	//Este bucle for se encarga de guardar la cantidad de paginas que hay,
+	//para ello se hace un calculo de la cantidad de elementos existentes y los que se mostraran
 	const pages = [];
-
 	for (let i = 1; i <= Math.ceil(allDogs.length / itemsPerPage); i++) {
 		pages.push(i);
 	}
 
+	//Aqui se calcula el ultimo numero y el primero
 	const indexOfLastItem = currentPage * itemsPerPage;
 	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 	const currentItems = allDogs.slice(indexOfFirstItem, indexOfLastItem);
 
+	//Esta funcion renderiza los numeros para la paginacion
 	const renderPageNumbers = pages.map((number) => {
 		if (number < maxPageNumerLimit + 1 && number > minPageNumerLimit) {
 			return (
 				<li
-				
 					key={number}
 					id={number}
 					onClick={handleClick}
@@ -41,39 +46,49 @@ const Pagination = () => {
 					{number}
 				</li>
 			);
-		}else{
-			return null
+		} else {
+			return null;
 		}
 	});
 
-	const handleNextBtn=()=>{
-		setCurrentPage(currentPage+1);
-		if(currentPage+1 > maxPageNumerLimit){
-			setMaxPageNumerLimit(maxPageNumerLimit+pageNumerLimit);
-			setMinPageNumerLimit(minPageNumerLimit+pageNumerLimit)
+	//Esta funcion es para el boton Next
+	const handleNextBtn = () => {
+		setCurrentPage(currentPage + 1);
+		if (currentPage + 1 > maxPageNumerLimit) {
+			setMaxPageNumerLimit(maxPageNumerLimit + pageNumerLimit);
+			setMinPageNumerLimit(minPageNumerLimit + pageNumerLimit);
 		}
-	}
-
-	const handlePrevBtn=()=>{
+	};
+	//Esta funcion es para el boton Previous
+	const handlePrevBtn = () => {
 		setCurrentPage(currentPage - 1);
-		if ((currentPage - 1)%pageNumerLimit == 0) {
+		if ((currentPage - 1) % pageNumerLimit == 0) {
 			setMaxPageNumerLimit(maxPageNumerLimit - pageNumerLimit);
 			setMinPageNumerLimit(minPageNumerLimit - pageNumerLimit);
 		}
-	}
+	};
 
-
-	let pageIncrementBtn=null;
-	if(pages.length > maxPageNumerLimit){
-		pageIncrementBtn= <li className={styles.puntitos} onClick={handleNextBtn}>&hellip;</li>
+	//Estas dos condiciones es para saber si se deben de mostrar los puntitos (...)
+	let pageIncrementBtn = null;
+	if (pages.length > maxPageNumerLimit) {
+		pageIncrementBtn = (
+			<li className={styles.puntitos} onClick={handleNextBtn}>
+				&hellip;
+			</li>
+		);
 	}
 	let pageDecrementBtn = null;
 	if (minPageNumerLimit >= 1) {
-		pageDecrementBtn = <li className={styles.puntitos} onClick={handlePrevBtn}>&hellip;</li>;
+		pageDecrementBtn = (
+			<li className={styles.puntitos} onClick={handlePrevBtn}>
+				&hellip;
+			</li>
+		);
 	}
 
 	return (
 		<div>
+			{/* Esto renderiza los botones de la paginacion */}
 			<ul className={styles.pageNumbers}>
 				<li>
 					<button
@@ -97,7 +112,10 @@ const Pagination = () => {
 					</button>
 				</li>
 			</ul>
+			{/* Esto renderiza las tarjetas */}
 			<Cards allDogs={currentItems} />
+
+			{/* Esto renderiza los botones de la paginacion */}
 			<ul className={styles.pageNumbers}>
 				<li>
 					<button

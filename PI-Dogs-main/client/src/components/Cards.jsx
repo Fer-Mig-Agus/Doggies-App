@@ -4,9 +4,7 @@ import styles from "../assets/styles/components/Cards.module.css";
 
 
 const Cards = ({allDogs}) => {
-    const close=(id)=>{
-        console.log(id);
-    }
+    
   return (
 		<div>
 			<div className={styles.content}>
@@ -23,7 +21,8 @@ const Cards = ({allDogs}) => {
 									temperaments={temperaments}
 									weight={weight}
 									life_span={life_span}
-									close={close}
+									
+
 								/>
 							);
 						},

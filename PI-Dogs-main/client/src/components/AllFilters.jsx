@@ -17,13 +17,13 @@ const AllFilters = () => {
 	const allTemperaments = useSelector((state) => state.temperaments);
 	
 
-	//funtion para filtrar por el tipo de temperamento
+	//funcion para filtrar por el tipo de temperamento
 	const handleChangeTemperament = (event) => {
 		const value = event.target.value;
 		dispatch(filterTemperaments(value));
 	};
 
-	//function para filtrar por el origen (BDD / API)
+	//funcion para filtrar por el origen (BDD / API)
 	const handleChangeOrigen = (event) => {
 		const value = event.target.value;
 		let origen = '';
@@ -31,7 +31,7 @@ const AllFilters = () => {
 		dispatch(filterOrigen(origen));
 	};
 
-	//function para ordenar alfabeticamente en orden Ascendente de Descendente
+	//funcion para ordenar alfabeticamente en orden Ascendente de Descendente
 	const handleChangeOrden = (event) => {
 		const value = event.target.value;
 		let orden = '';
@@ -46,7 +46,7 @@ const AllFilters = () => {
 		value === 'Máximo' ? (orden = 'maximo') : (orden = 'minimo');
 		dispatch(filterPeso(orden));
 	};
-
+	//funcion para recargar la pagina cuando precione restaurar
 	const resetAll = (event) => {
 		event.preventDefault();
 		window.location.reload();
@@ -63,7 +63,7 @@ const AllFilters = () => {
 						id=""
 						onChange={handleChangeOrigen}
 					>
-						<option value="Default">Default</option>
+						<option value="Default">Select</option>
 						<option value="Creados">Created</option>
 						<option value="Originales">Original</option>
 					</select>
@@ -77,7 +77,7 @@ const AllFilters = () => {
 						id=""
 						onChange={handleChangeOrden}
 					>
-						<option value="Default">Default</option>
+						<option value="Default">Select</option>
 						<option value="A-Z">A-Z</option>
 						<option value="Z-A">Z-A</option>
 					</select>
@@ -90,7 +90,7 @@ const AllFilters = () => {
 						id=""
 						onChange={handleChangePeso}
 					>
-						<option value="">Default</option>
+						<option value="Default">Select</option>
 						<option value="Máximo">Maximum</option>
 						<option value="Minimo">Minimum</option>
 					</select>
@@ -103,7 +103,7 @@ const AllFilters = () => {
 						className={styles.selectedFilters}
 						onChange={handleChangeTemperament}
 					>
-						<option value="">Default</option>
+						<option value="Default">Select</option>
 						{allTemperaments.map((temperament) => {
 							return <option key={temperament}>{temperament}</option>;
 						})}
