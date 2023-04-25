@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../assets/styles/components/Detail.module.css';
@@ -15,6 +15,8 @@ const Detail = () => {
 		}, 2000);
 		return;
 	};
+
+	const navigate = useNavigate();
 
 	const [dog, setDog] = useState({});
 	const { id } = useParams();
@@ -39,11 +41,48 @@ const Detail = () => {
 	return (
 		<div>
 			{mensaje && <ErrorComun mensaje={mensaje} style={error} />}
-			<Link to="/home">
-				<h3 className={styles.link}>Volver</h3>
-			</Link>
 
-			{dog.name ? <h1>{dog.name}</h1> : <h3>Loading...</h3>}
+			{dog.name ? (
+				<div className={styles.content}>
+					<div className={styles.contentSecondary}>
+						<div className={styles.contentImage}>
+							<img className={styles.imageDog} src={dog.image} alt={dog.name} />
+						</div>
+						<div>
+							<button
+								onClick={() => {
+									navigate('/home');
+								}}
+								className={styles.buttonCreate}
+							>
+								Go back
+							</button>
+							<h3>
+								Name:
+								<span>{dog.name}</span>
+							</h3>
+							<h3>
+								Temperaments:
+								<span>{dog.temperaments}</span>
+							</h3>
+							<h3>
+								Height:
+								<span>{dog.height}</span>
+							</h3>
+							<h3>
+								Weight:
+								<span>{dog.weight}</span>
+							</h3>
+							<h3>
+								Time of life:
+								<span> {dog.life_span}</span>
+							</h3>
+						</div>
+					</div>
+				</div>
+			) : (
+				<h3>Loading...</h3>
+			)}
 		</div>
 	);
 };

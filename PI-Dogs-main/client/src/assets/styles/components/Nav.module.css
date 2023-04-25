@@ -23,5 +23,6 @@
 .item:hover{
     color: #5804d7;
     cursor: pointer;
+    transition: all 300ms;
 }
 
