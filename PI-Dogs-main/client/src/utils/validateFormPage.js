@@ -83,7 +83,6 @@ export const verificarCampos = ({
     if (!heightMax || heightMax === '') return false;
     if (!weightMin || weightMin === '') return false;
     if (!weightMax || weightMax === '') return false;
-   // if (!temperament || temperament.length === 0) return false;
     if (!life_spanMin || life_spanMin === '') return false;
     if (!life_spanMax || life_spanMax === '') return false;
     return true;

@@ -1,9 +1,7 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SearchBar from '../components/SearchBar';
-import Cards from '../components/Cards';
+
 import {
 	getAllDogs,
 	getAllTemperaments,

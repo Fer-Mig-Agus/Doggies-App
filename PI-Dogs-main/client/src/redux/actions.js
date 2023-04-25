@@ -10,7 +10,7 @@ export const FILTER_ORIGEN ="FILTER_ORIGEN";
 export const FILTER_ORDER ="FILTER_ORDER";
 export const FILTER_PESO ="FILTER_PESO";
 export const GET_DOG_BY_ID ="GET_DOG_BY_ID";
-//export const GET_ALL_TEMPERAMENTS_IDS ="GET_ALL_TEMPERAMENTS_IDS";
+
 
 const URL_BASE = "http://localhost:3001"
 
@@ -69,17 +69,6 @@ export const filterOrden=(orden)=>{
 export const filterPeso=(peso)=>{
     return {type: FILTER_PESO,payload:peso};
 }
-
-
-
-
-// export const getAllTemperamentsIds = (listTemperaments) => {
-//     return async function (dispatch) {
-//         const idReturn = await axios.get(`${URL_BASE}/dogs/temperaments`, listTemperaments);
-//         console.log("desde actions: ", idReturn.data)
-//         dispatch({ type: GET_ALL_TEMPERAMENTS_IDS, payload: idReturn.data })
-//     }
-// }
 
 
 

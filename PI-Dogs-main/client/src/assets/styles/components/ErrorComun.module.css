@@ -24,11 +24,11 @@
 }
 
 .success{
-    background: green;
+    background: rgba(0, 212, 0, 0.9);
    
 }
 .failed{
-    background: #f009;
+    background: rgba(255, 0, 0, 0.9);
      
 }
 

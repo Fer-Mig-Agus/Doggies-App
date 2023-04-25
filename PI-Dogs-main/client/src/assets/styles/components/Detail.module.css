@@ -1,78 +1,94 @@
-.content{
+.content {
 	width: 100%;
 	height: 99.7vh;
 	background: url('../../img/backgroundNotFound.png');
 	background-attachment: fixed;
 	background-size: 5%;
 	background-repeat: repeatY;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  
 }
 
-.contentSecondary{
-    width: 90%;
-    height:90%;
-    border: 1px solid red;
-    overflow: hidden;
-    border-radius: 40px;
-    background: #a370f0;
-    display: grid;
-    grid-template-columns: 60% 40%;
+.contentSecondary {
+	width: 90%;
+	height: 90%;
+	overflow: hidden;
+	border-radius: 40px;
+	background: #a370f0;
+	display: grid;
+	grid-template-columns: 60% 40%;
+  box-shadow: 4px 0px 20px black;
 }
-.contentImage{
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.imageDog{
-    width: 100%;
-    height: 100%;
+.contentImage {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.imageDog {
+	width: 100%;
+	height: 100%;
+}
+.contentText {
+	width: 80%;
+	height: 100%;
+}
 
 .buttonCreate {
-  position: relative;
-  display: inline-block;
-  margin: 15px;
-  padding: 15px 30px;
-  text-align: center;
-  font-size: 18px;
-  letter-spacing: 1px;
-  text-decoration: none;
-  color: #725AC1;
-  background: transparent;
-  cursor: pointer;
-  transition: ease-out 0.5s;
-  border: 2px solid #725AC1;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 0 #725AC1;
+	position: relative;
+	display: inline-block;
+	margin-top: 30px;
+	margin-left: 50%;
+  margin-bottom: 10%;
+	padding: 15px 30px;
+	text-align: center;
+	font-size: 18px;
+	letter-spacing: 1px;
+	text-decoration: none;
+	color: white;
+	/* /color: #725AC1; */
+	background: #643ce7;
+	cursor: pointer;
+	transition: ease-out 0.5s;
+	border: 2px solid #fff;
+	border-radius: 10px;
+	box-shadow: inset 0 0 0 0 #9b82ee;
 }
 
 .buttonCreate:hover {
-  color: white;
-  box-shadow: inset 0 -100px 0 0 #725AC1;
+	color: white;
+	box-shadow: inset 0 -100px 0 0 #9b82ee;
 }
 
 .buttonCreate:active {
-  transform: scale(0.9);
+	transform: scale(0.9);
 }
 
+.smallTitle {
+	font-size: 30px;
+	font-family: lemonDays, sans-serif;
+	color: white;
+	margin-left: 5%;
+	font-weight: 300;
+	margin-top: 30px;
+}
+
+.infomation {
+	font-size: 20px;
+}
+.infomation:hover {
+	color: black;
+}
+
+
+.cargando{
+	font-size: 60px;
+	font-family: adelia, sans-serif;
+	font-weight: 500;
+	color: #5804d7;
+	text-align: center;
+	padding-top: 4%;
+    text-shadow: 4px 4px 5px black;
+}

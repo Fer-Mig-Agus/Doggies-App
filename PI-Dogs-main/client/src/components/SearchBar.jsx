@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styles from '../assets/styles/components/SearchBar.module.css';
 import { filterSearchByName } from '../redux/actions.js';

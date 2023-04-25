@@ -1,14 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from '../assets/styles/components/views/FormPage.module.css';
-
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import ErrorComun from '../components/ErrorComun';
-import { getAllTemperamentsIds, getAllTemperaments } from '../redux/actions';
+import {getAllTemperaments } from '../redux/actions';
 import axios from 'axios';
-import { verificarCampos, verificarOrden, validate } from './validateFormPage';
+import { verificarCampos, verificarOrden, validate } from '../utils/validateFormPage';
 
 //important: Aqui termina la validacion
 
@@ -83,7 +81,6 @@ const FormPage = () => {
 		heightMax,
 		weightMin,
 		weightMax,
-		temperament,
 		life_spanMax,
 		life_spanMin,
 	}) {
@@ -101,27 +98,10 @@ const FormPage = () => {
 		await axios
 			.post(`${URL_BASE}/dogs`, newDog)
 			.then((res) => {
-				console.log('creado con exito');
 				mostrandoMensajeError(false,"Creado con exito");
-				window.location.reload();
-				// setForm({
-				// 	name: '',
-				// 	image: '',
-				// 	heightMin: '',
-				// 	heightMax: '',
-				// 	weightMin: '',
-				// 	weightMax: '',
-				// 	temperament: '',
-				// 	life_spanMin: '',
-				// 	life_spanMax: '',
-				// });
-				// //fijarme como borrar los selecionados
-				// setSelectedTemperaments([]);
-				
-				
+				window.location.reload();	
 			})
 			.catch((error) => {
-				
 				mostrandoMensajeError(true,"La raza ya existe!");
 				
 			});
@@ -146,18 +126,22 @@ const FormPage = () => {
 		);
 	};
 
+
 	const submitHandler = (event) => {
 		event.preventDefault();
 
 		if (!verificarCampos(form)) {
-			mostrandoMensajeError(true, 'Completa los campos');
+			mostrandoMensajeError(true, 'Completa los campos!');
 			return;
 		}
-
-		if (!verificarOrden(form)) {
-			mostrandoMensajeError(true, 'Debe ser menor al maximo');
+		if (selectedTemperaments.length === 0){
+			mostrandoMensajeError(true, 'Elija al menos un temperamento!');
 			return;
 		}
+			if (!verificarOrden(form)) {
+				mostrandoMensajeError(true, 'Debe ser menor al maximo!');
+				return;
+			}
 
 		createDog(form);
 	};
@@ -176,28 +160,22 @@ const FormPage = () => {
 				),
 			);
 		}
-	};
-
-	//  name,
-	// 	image,
-	// 	heightMin,
-	// 	heightMax,
-	// 	weightMin,
-	// 	weightMax,
-	// 	temperament,
-	// 	life_span;
+	}
 
 	return (
-		<div>
+		<div className={styles.content}>
 			{mensaje && <ErrorComun mensaje={mensaje} style={error} />}
+			<h1 className={styles.titleMain}>
+				<span>T</span> Create you new breed <span>T</span>
+			</h1>
 
 			<form className={styles.form} onSubmit={submitHandler}>
-				<div className={styles.name}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="name">
-						Nombre:
+						Name:
 					</label>
 					<input
-						placeholder="Name aqui...."
+						placeholder="Name here..."
 						type="text"
 						name="name"
 						value={form.name}
@@ -208,12 +186,12 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.name}</span>
 				</div>
-				<div className={styles.image}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="image">
-						Imagen:
+						Image:
 					</label>
 					<input
-						placeholder="Image url...."
+						placeholder="Image url here..."
 						type="text"
 						name="image"
 						value={form.image}
@@ -224,12 +202,12 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.image}</span>
 				</div>
-				<div className={styles.heightMax}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="heightMax">
-						Altura Max:
+						Weight Max:
 					</label>
 					<input
-						placeholder="Height Max aqui...."
+						placeholder="Height Max here..."
 						type="text"
 						name="heightMax"
 						value={form.heightMax}
@@ -240,12 +218,12 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.heightMax}</span>
 				</div>
-				<div className={styles.heightMin}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="heightMin">
-						Altura Min:
+						Weight Min:
 					</label>
 					<input
-						placeholder="Height Min aqui...."
+						placeholder="Height Min here..."
 						type="text"
 						name="heightMin"
 						value={form.heightMin}
@@ -256,12 +234,12 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.heightMin}</span>
 				</div>
-				<div className={styles.weightMax}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="weightMax">
-						Peso Max:
+						Height Max:
 					</label>
 					<input
-						placeholder="Weight Max aqui...."
+						placeholder="Weight Max here..."
 						type="text"
 						name="weightMax"
 						value={form.weightMax}
@@ -272,12 +250,12 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.weightMax}</span>
 				</div>
-				<div className={styles.weightMin}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="weightMin">
-						Peso Min:
+						Height Min:
 					</label>
 					<input
-						placeholder="Weight Min aqui...."
+						placeholder="Weight Min here..."
 						type="text"
 						name="weightMin"
 						value={form.weightMin}
@@ -289,8 +267,8 @@ const FormPage = () => {
 					<span className={styles.errorSpan}>{errors.weightMin}</span>
 				</div>
 				<div className={styles.temperament}>
-					<label className={styles.label} htmlFor="temperament">
-						Temperament:
+					<label className={styles.labelTemperaments} htmlFor="temperament">
+						Temperaments:
 					</label>
 					<div className={styles.boxTemperaments}>
 						{allTemperaments.map((temperament) => {
@@ -301,20 +279,20 @@ const FormPage = () => {
 										value={temperament}
 										onChange={handleChangeOption}
 									/>
-									<label value="">{temperament}</label>
+									<label value="" className={styles.itemTemperament}>
+										{temperament}
+									</label>
 								</div>
 							);
 						})}
 					</div>
-
-					<span className={styles.errorSpan}>{errors.temperament}</span>
 				</div>
-				<div className={styles.life_spanMax}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="life_spanMax">
-						Tiempo de vida Max:
+						Time of life Max:
 					</label>
 					<input
-						placeholder="Tiempo de vida max aqui...."
+						placeholder="Time of life max here..."
 						type="text"
 						name="life_spanMax"
 						value={form.life_spanMax}
@@ -325,12 +303,12 @@ const FormPage = () => {
 					/>
 					<span className={styles.errorSpan}>{errors.life_spanMax}</span>
 				</div>
-				<div className={styles.life_spanMin}>
+				<div className={styles.boxContentInputs}>
 					<label className={styles.label} htmlFor="life_spanMin">
-						Tiempo de vida Min:
+						Time of life Min:
 					</label>
 					<input
-						placeholder="Tiempo de vida min aqui...."
+						placeholder="Time of life min here ..."
 						type="text"
 						name="life_spanMin"
 						value={form.life_spanMin}
@@ -342,33 +320,14 @@ const FormPage = () => {
 					<span className={styles.errorSpan}>{errors.life_spanMin}</span>
 				</div>
 
-				<button className={styles.button} type="submit">
-					Create Dog
+				<button className={styles.buttonCreate} type="submit">
+					Create new breed
 				</button>
-				<Link to="/home">
-					<h3 className={styles.registrado}>Quieres regresar?</h3>
-				</Link>
 			</form>
+			<Link to="/home" className={styles.link}>
+				<h3 className={styles.item}>Quieres regresar?</h3>
+			</Link>
 		</div>
-
-		// <div>
-		// 	<div>
-		// 		<input type="checkbox" name="" id="" />
-		// 		<label htmlFor="">bueno</label>
-		// 	</div>
-		// 	<div>
-		// 		<input type="malo" name="" id="" />
-		// 		<label htmlFor="">bueno</label>
-		// 	</div>
-		// 	<div>
-		// 		<input type="quieto" name="" id="" />
-		// 		<label htmlFor="">bueno</label>
-		// 	</div>
-		// 	<div>
-		// 		<input type="obediente" name="" id="" />
-		// 		<label htmlFor="">bueno</label>
-		// 	</div>
-		// </div>
 	);
 };
 

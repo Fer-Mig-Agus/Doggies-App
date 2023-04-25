@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Detail from './Detail';
 import styles from '../assets/styles/components/Card.module.css';
 
 const Card = ({
@@ -9,8 +8,6 @@ const Card = ({
 	image,
 	temperaments,
 	weight,
-	height,
-	life_span,
 }) => {
 
 	

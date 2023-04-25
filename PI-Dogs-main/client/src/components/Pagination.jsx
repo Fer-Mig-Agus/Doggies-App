@@ -1,20 +1,12 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useState } from 'react';
+import {useSelector } from 'react-redux';
 import styles from '../assets/styles/components/Pagination.module.css';
-import { getAllDogs } from '../redux/actions';
 import Cards from './Cards';
 
 const Pagination = () => {
 
-
 	const allDogs = useSelector((state) => state.copyDogs);
-
-	console.log(typeof allDogs);
-
-	// useEffect(()=>{
-		
-	// },[allDogs])
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [itemsPerPage, setItemPerPage] = useState(8);
@@ -71,12 +63,6 @@ const Pagination = () => {
 	}
 
 
-
-	// // Funcion que trae a todos los dogs que existen
-	// const allDogs = () => {
-	// 	console.log('todos los perros');
-	// };
-
 	let pageIncrementBtn=null;
 	if(pages.length > maxPageNumerLimit){
 		pageIncrementBtn= <li className={styles.puntitos} onClick={handleNextBtn}>&hellip;</li>
@@ -88,6 +74,29 @@ const Pagination = () => {
 
 	return (
 		<div>
+			<ul className={styles.pageNumbers}>
+				<li>
+					<button
+						onClick={handlePrevBtn}
+						className={styles.buttonPagination}
+						disabled={currentPage == pages[0] ? true : false}
+					>
+						Previous
+					</button>
+				</li>
+				{pageDecrementBtn}
+				{renderPageNumbers}
+				{pageIncrementBtn}
+				<li>
+					<button
+						onClick={handleNextBtn}
+						className={styles.buttonPagination}
+						disabled={currentPage == pages[pages.length - 1] ? true : false}
+					>
+						Next
+					</button>
+				</li>
+			</ul>
 			<Cards allDogs={currentItems} />
 			<ul className={styles.pageNumbers}>
 				<li>

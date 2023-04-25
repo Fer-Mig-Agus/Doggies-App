@@ -22,6 +22,7 @@
 }
 .titleMain:hover{
     color:#a370f0;
+	transition: all 300ms;
 }
 
 .cssbuttonsIoButton {
