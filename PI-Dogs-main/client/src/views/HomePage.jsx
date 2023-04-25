@@ -12,7 +12,7 @@ import {
 import AllFilters from '../components/AllFilters';
 import styles from '../assets/styles/components/views/HomePage.module.css';
 import Pagination from '../components/Pagination';
-import PaginatioTwo from '../components/PaginationTwo';
+
 
 const HomePage = () => {
 	const stateGlobal = useSelector((state) => state.dogs);
@@ -31,11 +31,8 @@ const HomePage = () => {
 
 	return (
 		<div className={styles.content}>
-			<h1 className={styles.titleMain}>
-				Bienvenido estas son todas la razas disponibles
-			</h1>
 			<AllFilters />
-			<h1 className={styles.titleSecond}>Lista de todos los Perritos</h1>
+			<h1 className={styles.titleSecond}>List of dog breeds</h1>
 			<Pagination />
 			{/* <PaginatioTwo /> */}
 		</div>

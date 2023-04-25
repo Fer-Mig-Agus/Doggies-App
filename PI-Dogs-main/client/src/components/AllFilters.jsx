@@ -54,44 +54,58 @@ const AllFilters = () => {
 
 	const resetAll = (event) => {
 		event.preventDefault();
-		
-		 window.location.reload();
+		window.location.reload();
 	};
 
 	return (
 		<div className={styles.contentMain}>
 			<div className={styles.contentButtonFilters}>
 				<div>
-					<h3>Personajes:</h3>
-					<select name="" id="" onChange={handleChangeOrigen}>
+					<h3 className={styles.typesFilter}>Origin:</h3>
+					<select
+						className={styles.selectedFilters}
+						name=""
+						id=""
+						onChange={handleChangeOrigen}
+					>
 						<option value="Default">Default</option>
-						<option value="Creados">Creados</option>
-						<option value="Originales">Originales</option>
+						<option value="Creados">Created</option>
+						<option value="Originales">Original</option>
 					</select>
 				</div>
 
 				<div>
-					<h3>Orden:</h3>
-					<select name="" id="" onChange={handleChangeOrden}>
-						<option value="">Default</option>
+					<h3 className={styles.typesFilter}>Order:</h3>
+					<select
+						className={styles.selectedFilters}
+						name=""
+						id=""
+						onChange={handleChangeOrden}
+					>
+						<option value="Default">Default</option>
 						<option value="A-Z">A-Z</option>
 						<option value="Z-A">Z-A</option>
 					</select>
 				</div>
 				<div>
-					<h3>Peso:</h3>
-					<select name="" id="" onChange={handleChangePeso}>
+					<h3 className={styles.typesFilter}>Weight:</h3>
+					<select
+						className={styles.selectedFilters}
+						name=""
+						id=""
+						onChange={handleChangePeso}
+					>
 						<option value="">Default</option>
-						<option value="Máximo">Máximo</option>
-						<option value="Minimo">Minimo</option>
+						<option value="Máximo">Maximum</option>
+						<option value="Minimo">Minimum</option>
 					</select>
 				</div>
 				<div className={styles.contentFilterTemperaments}>
-					<h3>Temperamentos:</h3>
+					<h3 className={styles.typesFilter}>Temperaments:</h3>
 					<select
 						name=""
 						id=""
-						className={styles.selectTemperaments}
+						className={styles.selectedFilters}
 						onChange={handleChangeTemperament}
 					>
 						<option value="">Default</option>
@@ -101,7 +115,7 @@ const AllFilters = () => {
 					</select>
 				</div>
 				{/* importo el boton para restaurar */}
-				<button className={styles.buttonReset} onClick={resetAll}>
+				{/* <button className={styles.buttonReset} onClick={resetAll}>
 					<svg
 						class="svg-icon"
 						fill="none"
@@ -116,16 +130,16 @@ const AllFilters = () => {
 						</g>
 					</svg>
 					<span className={styles.resetText}>Restore</span>
-				</button>
-				{/* <button
-					className={styles.button}
+				</button> */}
+				<button
+					className={styles.buttonCreate}
 					type="button"
 					onClick={resetAll}
 				>
-					Restaurar
-				</button> */}
+					Restore
+				</button>
 				<Link to="/form">
-					<button>Crear</button>
+					<button className={styles.buttonCreate}>Create</button>
 				</Link>
 			</div>
 			<div className={styles.searchBar}>

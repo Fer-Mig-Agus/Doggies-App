@@ -103,19 +103,20 @@ const FormPage = () => {
 			.then((res) => {
 				console.log('creado con exito');
 				mostrandoMensajeError(false,"Creado con exito");
-				setForm({
-					name: '',
-					image: '',
-					heightMin: '',
-					heightMax: '',
-					weightMin: '',
-					weightMax: '',
-					temperament: '',
-					life_spanMin: '',
-					life_spanMax: '',
-				});
-				//fijarme como borrar los selecionados
-				setSelectedTemperaments([]);
+				window.location.reload();
+				// setForm({
+				// 	name: '',
+				// 	image: '',
+				// 	heightMin: '',
+				// 	heightMax: '',
+				// 	weightMin: '',
+				// 	weightMax: '',
+				// 	temperament: '',
+				// 	life_spanMin: '',
+				// 	life_spanMax: '',
+				// });
+				// //fijarme como borrar los selecionados
+				// setSelectedTemperaments([]);
 				
 				
 			})

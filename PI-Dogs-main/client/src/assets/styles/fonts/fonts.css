@@ -12,3 +12,19 @@
     font-style: normal;
 }
 
+
+@font-face{
+    font-family: lemonDays;
+    src: url("../../fonts/lemon_days/LemonDays.otf") format('opentype'),
+         url("../../fonts/lemon_days/LemonDays.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: SocialMediaCircled;
+    src: url("../../fonts/social_media_circled/SocialMediaCircled.otf") format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+

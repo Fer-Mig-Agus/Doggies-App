@@ -5,17 +5,18 @@
 }
 
 .search {
-  --input-line: #cccccc;
-  --input-text-color: #808080;
-  --input-text-hover-color: transparent;
-  --input-border-color: #808080;
-  --input-border-hover-color: #999999;
-  --input-bg-color: #333333;
+  --input-line: white;
+  --input-text-color: #white;
+  --input-text-hover-color: black;
+  --input-border-color: #a370f0;
+  --input-border-hover-color: #a370f0;
+  --input-bg-color: #a370f0;
   --search-max-width: 250px;
   --search-min-width: 150px;
   --border-radius: 5px;
   --transition-cubic-bezier: 150ms cubic-bezier(0.4,0,0.2,1);
 }
+
 
 .searchBox {
   max-width: var(--search-max-width);

@@ -1,0 +1,36 @@
+.content {
+	width: 100%;
+	height: 101.4vh;
+	
+	background: url('../../../img/backgroundNotFound.png');
+	background-attachment: fixed;
+	background-size: 5%;
+	background-repeat: repeatY;
+    
+}
+.contentSecondary{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titlePrimary{
+ font-family: adelia,sans-serif;
+ font-size: 60px;
+ color: #5804d7;
+ text-shadow: 3px 1px 5px black;
+
+}
+
+.titleSecondary{
+ font-family: lemonDays,sans-serif;
+ font-size: 40px;
+ color: #5804d7;
+ text-shadow: 3px 1px 5px black;
+ font-weight: 300;
+
+}

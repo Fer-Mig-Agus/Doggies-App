@@ -1,11 +1,13 @@
 .content{
     width: 100%;
     height: 100%;
-}
-.titleMain{
-    text-align: center;
+    /* background: url("../../../img/backgroundHome.jpg");
+    background-size: contain;
+    background-repeat: repeat; */
 }
 
 .titleSecond{
     text-align: center;
+    font-family: adelia,sans-serif;
+    margin-top: -1%;
 }

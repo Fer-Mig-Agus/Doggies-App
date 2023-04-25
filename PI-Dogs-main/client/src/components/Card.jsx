@@ -11,7 +11,6 @@ const Card = ({
 	weight,
 	height,
 	life_span,
-	close,
 }) => {
 
 	
@@ -20,24 +19,27 @@ const Card = ({
 	return (
 		<div className={styles.content}>
 			<div className={styles.contentImage}>
-				<img src={image} alt={name} title={id} />
+				<img className={styles.imageCard} src={image} alt={name} title={name} />
 			</div>
-			{/* <button
-				className={styles.button}
-				onClick={() => {
-					close(id);
-				}}
-			>
-				X
-			</button> */}
-			<Link to={`/detail/${id}`}>
-				
-				<h3>Name:<br />{name}</h3>
-			</Link>
-			<h4>Temperamentos: {temperaments}</h4>;
-			<h5>Tiempo de vida: {life_span}</h5>
-			<p>Peso: {weight}</p>
-			<p>Altura: {height}</p>
+			<div className={styles.contentText}>
+				<Link to={`/detail/${id}`} className={styles.link}>
+					<h3 className={styles.item}>
+						<span className={styles.spanList}>Name: </span>
+						<br />
+						{name}
+					</h3>
+				</Link>
+				<p className={styles.temperamentList}>
+					<span className={styles.spanList}>Temperamentos: </span>
+					{temperaments}
+				</p>
+				;
+				<p className={styles.pesoList}>
+					{' '}
+					<span className={styles.spanList}>Peso: </span>
+					{weight}
+				</p>
+			</div>
 		</div>
 	);
 };

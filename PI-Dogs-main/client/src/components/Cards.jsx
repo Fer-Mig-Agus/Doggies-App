@@ -9,12 +9,10 @@ const Cards = ({allDogs}) => {
     }
   return (
 		<div>
-			
 			<div className={styles.content}>
 				{allDogs.length ? (
 					allDogs.map(
 						({ id, name, image, temperaments, weight, height, life_span }) => {
-							
 							return (
 								<Card
 									key={id}
@@ -31,7 +29,7 @@ const Cards = ({allDogs}) => {
 						},
 					)
 				) : (
-					<p>No hay perritos...</p>
+					<h2 className={styles.sinPerritos}>No puppies...</h2>
 				)}
 			</div>
 		</div>

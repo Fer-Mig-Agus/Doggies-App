@@ -6,9 +6,9 @@ const Nav = () => {
   return (
     <div>
         <div className={styles.contentLink}>
-            <Link to="/home"><h3 className={styles.link}>Home</h3></Link>
-            <Link to="/form"><h3 className={styles.link}>Create</h3></Link>
-            <Link to="/about"><h3 className={styles.link}>About me</h3></Link>
+            <Link to="/home" className={styles.link} ><h3 className={styles.item}>Home</h3></Link>
+            <Link to="/form"  className={styles.link}><h3 className={styles.item}>Create</h3></Link>
+            <Link to="/about"  className={styles.link}><h3 className={styles.item}>About me</h3></Link>
         </div>
     </div>
   )

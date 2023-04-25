@@ -40,10 +40,11 @@ const Pagination = () => {
 		if (number < maxPageNumerLimit + 1 && number > minPageNumerLimit) {
 			return (
 				<li
+				
 					key={number}
 					id={number}
 					onClick={handleClick}
-					className={currentPage == number ? styles.active : null}
+					className={currentPage == number ? styles.active : styles.normal}
 				>
 					{number}
 				</li>
@@ -78,16 +79,16 @@ const Pagination = () => {
 
 	let pageIncrementBtn=null;
 	if(pages.length > maxPageNumerLimit){
-		pageIncrementBtn= <li onClick={handleNextBtn}>&hellip;</li>
+		pageIncrementBtn= <li className={styles.puntitos} onClick={handleNextBtn}>&hellip;</li>
 	}
 	let pageDecrementBtn = null;
 	if (minPageNumerLimit >= 1) {
-		pageDecrementBtn = <li onClick={handlePrevBtn}>&hellip;</li>;
+		pageDecrementBtn = <li className={styles.puntitos} onClick={handlePrevBtn}>&hellip;</li>;
 	}
 
 	return (
 		<div>
-			
+			<Cards allDogs={currentItems} />
 			<ul className={styles.pageNumbers}>
 				<li>
 					<button
@@ -95,7 +96,7 @@ const Pagination = () => {
 						className={styles.buttonPagination}
 						disabled={currentPage == pages[0] ? true : false}
 					>
-						Prev
+						Previous
 					</button>
 				</li>
 				{pageDecrementBtn}
@@ -111,7 +112,6 @@ const Pagination = () => {
 					</button>
 				</li>
 			</ul>
-			<Cards allDogs={currentItems} />
 		</div>
 	);
 };

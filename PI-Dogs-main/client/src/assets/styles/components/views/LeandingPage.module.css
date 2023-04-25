@@ -1,7 +1,7 @@
 .content {
 	width: 100%;
-	height: 100vh;
-	margin-top: -2%;
+	height: 101.4vh;
+	margin-top: -3%;
 	background: url('../../../img/LeandingPage.jpg');
 	background-size: cover;
 	background-attachment: fixed;
@@ -9,21 +9,25 @@
 
 .titleMain {
 	font-size: 60px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: adelia, sans-serif;
 	font-weight: 500;
-	color: #a370f0;
+	color: #5804d7;
 	text-align: center;
 	padding-top: 4%;
     text-shadow: 4px 4px 5px black;
 }
+.titleMain span{
+    font-size: 110px;
+    font-family: iconsDogs,sans-serif;
+}
 .titleMain:hover{
-    color:#5804d7;
+    color:#a370f0;
 }
 
 .cssbuttonsIoButton {
 	margin-top: 28%;
     margin-left: 45%;
-	background: #a370f0;
+	background: #5804d7;
 	color: white;
 	font-family: inherit;
 	padding: 0.35em;
@@ -38,7 +42,7 @@
 	box-shadow: inset 0 0 1.6em -0.6em #714da6;
 	overflow: hidden;
 	position: relative;
-	height: 2.8em;
+	height: 3.8em;
 	padding-right: 3.3em;
 }
 
@@ -49,7 +53,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 2.2em;
+	height: 3.2em;
 	width: 2.2em;
 	border-radius: 0.7em;
 	box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
@@ -65,7 +69,7 @@
 .cssbuttonsIoButton .icon svg {
 	width: 1.1em;
 	transition: transform 0.3s;
-	color: #7b52b9;
+	color: #a370f0;
 }
 
 .cssbuttonsIoButton:hover .icon svg {
