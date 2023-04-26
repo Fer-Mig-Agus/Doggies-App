@@ -45,53 +45,86 @@ export default function Reducer(state = initialState, action) {
             }
         //Retorna las razas que cumplen con requisito de temperamento
         case FILTER_TEMPERAMENTS:
-
-            return {
-                ...state,
-                copyDogs: state.dogs.filter((dog) => dog.temperaments?.includes(action.payload))
-            }
-        //Retorna las razas que cumplan con el origen pedido
-        case FILTER_ORIGEN:
-
-            if (action.payload == "DB") {
+            if (action.payload !== "Default") {
                 return {
                     ...state,
-                    copyDogs: state.dogs.filter((dog) => isNaN(dog.id))
+                    copyDogs: state.dogs.filter((dog) => dog.temperaments?.includes(action.payload))
                 }
             } else {
                 return {
                     ...state,
-                    copyDogs: state.dogs.filter((dog) => !isNaN(dog.id))
+                    copyDogs: state.dogs
+                }
+            }
+
+
+        //Retorna las razas que cumplan con el origen pedido
+        case FILTER_ORIGEN:
+            if (action.payload !== "Default") {
+                if (action.payload == "DB") {
+                    return {
+                        ...state,
+                        copyDogs: state.dogs.filter((dog) => isNaN(dog.id))
+                    }
+                } else {
+                    return {
+                        ...state,
+                        copyDogs: state.dogs.filter((dog) => !isNaN(dog.id))
+                    }
+                }
+            } else {
+                return {
+                    ...state,
+                    copyDogs: state.dogs
                 }
             }
         //Retorna la informacion ordenada alfabeticamente, dependiendo del tipo de ordenamiento
         case FILTER_ORDER:
-            return {
-                ...state,
-                copyDogs:
-                    action.payload === "ascendente"
-                        ? [
+            if (action.payload != "Default") {
+                if (action.payload === "ascendente") {
+                    return {
+                        ...state,
+                        copyDogs: [
                             ...state.copyDogs.sort(function (a, b) {
                                 return a.name.localeCompare(b.name)
                             }),
                         ]
-                        : [
+                    }
+                } else {
+                    return {
+                        ...state,
+                        copyDogs: [
                             ...state.copyDogs.sort(function (a, b) {
                                 return b.name.localeCompare(a.name)
                             }),
-                        ],
-            };
-        //Retorna la informacion ordenada por peso, dependiendo del tipo de ordenamiento
-        case FILTER_PESO:
-            if (action.payload === "maximo") {
-                return {
-                    ...state,
-                    copyDogs: ordenarPesoFinalMaximo([...state.copyDogs])
+                        ]
+                    }
                 }
             } else {
                 return {
                     ...state,
-                    copyDogs: ordenarPesoFinalMinimo([...state.copyDogs])
+                    copyDogs: state.dogs
+                }
+            }
+        //Retorna la informacion ordenada por peso, dependiendo del tipo de ordenamiento
+        case FILTER_PESO:
+            if (action.payload !== "Default") {
+
+                if (action.payload === "maximo") {
+                    return {
+                        ...state,
+                        copyDogs: ordenarPesoFinalMaximo([...state.copyDogs])
+                    }
+                } else {
+                    return {
+                        ...state,
+                        copyDogs: ordenarPesoFinalMinimo([...state.copyDogs])
+                    }
+                }
+            } else {
+                return {
+                    ...state,
+                    copyDogs: state.dogs
                 }
             }
 

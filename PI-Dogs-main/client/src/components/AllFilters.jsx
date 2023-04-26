@@ -15,12 +15,10 @@ const AllFilters = () => {
 
 	//Trae todos los temperamentos
 	const allTemperaments = useSelector((state) => state.temperaments);
-	
 
 	//funcion para filtrar por el tipo de temperamento
 	const handleChangeTemperament = (event) => {
 		const value = event.target.value;
-		console.log("entro en la cosulta del temperamentos")
 		dispatch(filterTemperaments(value));
 	};
 
@@ -28,7 +26,19 @@ const AllFilters = () => {
 	const handleChangeOrigen = (event) => {
 		const value = event.target.value;
 		let origen = '';
-		value === 'Creados' ? (origen = 'DB') : (origen = 'API');
+		switch (value) {
+			case 'Default':
+				origen = 'Default';
+				break;
+			case 'Creados':
+				origen = 'DB';
+				break;
+			case 'Originales':
+				origen = 'API';
+				break;
+			default:
+				origen = 'Default';
+		}
 		dispatch(filterOrigen(origen));
 	};
 
@@ -36,7 +46,20 @@ const AllFilters = () => {
 	const handleChangeOrden = (event) => {
 		const value = event.target.value;
 		let orden = '';
-		value === 'A-Z' ? (orden = 'ascendente') : (orden = 'descendente');
+		switch (value) {
+			case 'Default':
+				orden = 'Default';
+				break;
+			case 'A-Z':
+				orden = 'ascendente';
+				break;
+			case 'Z-A':
+				orden = 'descendente';
+				break;
+			default:
+				orden = 'Default';
+		}
+		
 		dispatch(filterOrden(orden));
 	};
 
@@ -44,7 +67,20 @@ const AllFilters = () => {
 	const handleChangePeso = (event) => {
 		const value = event.target.value;
 		let orden = '';
-		value === 'Máximo' ? (orden = 'maximo') : (orden = 'minimo');
+		switch (value) {
+			case 'Default':
+				orden = 'Default';
+				break;
+			case 'Máximo':
+				orden = 'maximo';
+				break;
+			case 'Minimo':
+				orden = 'minimo';
+				break;
+			default:
+				orden = 'Default';
+		}
+
 		dispatch(filterPeso(orden));
 	};
 	//funcion para recargar la pagina cuando precione restaurar
@@ -79,8 +115,8 @@ const AllFilters = () => {
 						onChange={handleChangeOrden}
 					>
 						<option value="Default">Select</option>
-						<option value="A-Z">A-Z</option>
-						<option value="Z-A">Z-A</option>
+						<option value="A-Z">Upward</option>
+						<option value="Z-A">Falling</option>
 					</select>
 				</div>
 				<div>
