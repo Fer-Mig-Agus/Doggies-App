@@ -28,7 +28,7 @@ const createTemperament = async (req, res) => {
                     }
                 }
             }
-            res.json(temperament).status(200)
+            return res.json(temperament).status(200)
         }
 
         const temperaments = await Temperament.findAll()

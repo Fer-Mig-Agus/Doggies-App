@@ -29,11 +29,8 @@ function App() {
 
   return (
     <div className="App">
-
-
-      {verificarRuta() && <Nav />}
-
       
+      {verificarRuta() && <Nav />}
 
       <Routes>
         
