@@ -20,7 +20,6 @@ function App() {
       case "/": return false
       case "/home": return true
       case "/about": return true
-      case "/favorite": return true
       case "/detail/:id": return false
       case "/form": return true
       default: return false;

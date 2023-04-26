@@ -12,7 +12,7 @@
 	height: 100%;
 	display: grid;
 	grid-template-columns: 40% 60%;
-	background: rgba(0, 0, 0, 0.4);
+	/* background: rgba(0, 0, 0, 0.4); */
 }
 
 .contentImage {
@@ -51,8 +51,11 @@
 	font-size: 30px;
 	text-align: center;
 	color: black;
-	text-shadow: 2px 2px 5px white;
+	text-shadow: 2px 2px 15px black;
 	font-weight: 600;
+	background-color: rgba(255, 255, 255, 0.9);
+	border-radius: 2px;
+	padding: 1rem;
 }
 
 .contentIcon {

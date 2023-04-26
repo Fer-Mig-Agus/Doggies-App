@@ -20,6 +20,7 @@ const AllFilters = () => {
 	//funcion para filtrar por el tipo de temperamento
 	const handleChangeTemperament = (event) => {
 		const value = event.target.value;
+		console.log("entro en la cosulta del temperamentos")
 		dispatch(filterTemperaments(value));
 	};
 

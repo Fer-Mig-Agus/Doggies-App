@@ -1,6 +1,6 @@
 import React from 'react';
-import {useState } from 'react';
-import {useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../assets/styles/components/Pagination.module.css';
 import Cards from './Cards';
 
@@ -20,6 +20,12 @@ const Pagination = () => {
 	const handleClick = (event) => {
 		setCurrentPage(Number(event.target.id));
 	};
+
+	useEffect(() => {
+		setMinPageNumerLimit(0);
+		setCurrentPage(1);
+		setItemPerPage(8);
+	}, [allDogs]);
 
 	//Este bucle for se encarga de guardar la cantidad de paginas que hay,
 	//para ello se hace un calculo de la cantidad de elementos existentes y los que se mostraran
@@ -114,31 +120,6 @@ const Pagination = () => {
 			</ul>
 			{/* Esto renderiza las tarjetas */}
 			<Cards allDogs={currentItems} />
-
-			{/* Esto renderiza los botones de la paginacion */}
-			<ul className={styles.pageNumbers}>
-				<li>
-					<button
-						onClick={handlePrevBtn}
-						className={styles.buttonPagination}
-						disabled={currentPage == pages[0] ? true : false}
-					>
-						Previous
-					</button>
-				</li>
-				{pageDecrementBtn}
-				{renderPageNumbers}
-				{pageIncrementBtn}
-				<li>
-					<button
-						onClick={handleNextBtn}
-						className={styles.buttonPagination}
-						disabled={currentPage == pages[pages.length - 1] ? true : false}
-					>
-						Next
-					</button>
-				</li>
-			</ul>
 		</div>
 	);
 };

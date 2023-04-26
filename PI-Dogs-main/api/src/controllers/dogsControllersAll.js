@@ -3,7 +3,6 @@ require('dotenv').config();
 const { URL_BASE, APY_KEY } = process.env;
 const { Dog, Temperament } = require("../db/db");
 
-
 //important: Este trae los ids de los temperamentos de la BDD RUTA:/dogs/temperamets (get)
 
 const getAllIdsTemperaments = async (req, res) => {
@@ -19,6 +18,9 @@ const getAllIdsTemperaments = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 }
+
+
+
 
 
 
