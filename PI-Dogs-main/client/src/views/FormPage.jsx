@@ -103,7 +103,7 @@ const FormPage = () => {
 			})
 			.catch((error) => {
 				mostrandoMensajeError(true,"La raza ya existe!");
-				
+				window.location.reload();
 			});
 
 		
