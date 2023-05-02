@@ -12,7 +12,7 @@ import ErrorPage from './views/ErrorPage';
 
 import axios from "axios";
 
-axios.defaults.baseURL = "pi-dogs-production-e681.up.railway.app";
+axios.defaults.baseURL = "https://pi-dogs-production-1409.up.railway.app";
 
 function App() {
 
