@@ -9,13 +9,15 @@ const { Dog, Temperament } = require("../db/db");
 const createTemperament = async (req, res) => {
     try {
 
-        const { data } = await axios.get(
-            `${URL_BASE}/v1/breeds?key=${APY_KEY}`
-        );
-
+        
         const temperament = await Temperament.findByPk(124)
 
         if (!temperament) {
+
+            const { data } = await axios.get(
+                `${URL_BASE}/v1/breeds?key=${APY_KEY}`
+            );
+
             for (const element of data) {
                 if (element.temperament) {
                     const clean = element.temperament.split(",");

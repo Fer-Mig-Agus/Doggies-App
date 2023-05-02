@@ -46,6 +46,8 @@ const FormPage = () => {
 		life_spanMax: '',
 	});
 
+	
+
 	//Creo un formulario para los errores
 	const [errors, setErrors] = useState({
 		name: '',
@@ -115,6 +117,8 @@ const FormPage = () => {
 	const handleChange = (event) => {
 		const property = event.target.name;
 		const value = event.target.value;
+
+		console.log(value);
 
 		setForm({ ...form, [property]: value, temperament: selectedTemperaments });
 

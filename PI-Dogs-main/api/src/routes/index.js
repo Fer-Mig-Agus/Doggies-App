@@ -24,7 +24,6 @@ router.put("/dogs/temperaments", getAllIdsTemperaments)
 
 router.get("/dogs/names", getBreedsName);
 
-
 router.get("/dogs/:idRaza", getBreedsId);
 
 router.post("/dogs", createNewDog)

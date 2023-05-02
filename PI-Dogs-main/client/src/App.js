@@ -10,6 +10,10 @@ import AboutPage from './views/AboutPage';
 import Nav from './components/Nav';
 import ErrorPage from './views/ErrorPage';
 
+import axios from "axios";
+
+axios.defaults.baseURL="http://localhost:3001/"
+
 function App() {
 
   const {pathname}=useLocation();

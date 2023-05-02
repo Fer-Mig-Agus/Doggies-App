@@ -1,6 +1,8 @@
 //important: Aqui esta la validacion de los campos
-export  function validate(state, errorsState) {
-    
+export function validate(state, errorsState) {
+
+    console.log(state.heightMax);
+
     const errors = { ...errorsState };
 
     //document: validacion name
@@ -22,7 +24,9 @@ export  function validate(state, errorsState) {
     //document: validacion altura max
     if (!state.heightMax) errors.heightMax = 'Altura maxima Vacio';
     else if (isNaN(state.heightMax)) errors.heightMax = 'Debe ser un numero';
+    else if (parseInt(state.heightMax, 10) == NaN) errors.heightMax = "Debe ser Positivo";
     else errors.heightMax = '';
+
     //document: validacion altura min
     if (!state.heightMin) errors.heightMin = 'Altura minima Vacio';
     else if (isNaN(state.heightMin)) errors.heightMin = 'Debe ser un numero';
@@ -78,7 +82,9 @@ export const verificarCampos = ({
     life_spanMax,
 }) => {
     if (!name || name === '' || !isNaN(name)) return false;
-    if (!image || image === '') return false;
+    if (!image || image === '' || !/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+        image,
+    )) return false;
     if (!heightMin || heightMin === '') return false;
     if (!heightMax || heightMax === '') return false;
     if (!weightMin || weightMin === '') return false;

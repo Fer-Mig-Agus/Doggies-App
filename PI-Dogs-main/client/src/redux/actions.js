@@ -19,7 +19,7 @@ const URL_BASE = "http://localhost:3001"
 // trayendo toda la informacion de las razas
 export const getAllDogs = () => {
     return async function (dispatch) {
-        const response = await axios.get(`${URL_BASE}/dogs`)
+        const response = await axios.get(`/dogs`)
         dispatch({ type: GET_ALL_DOGS, payload: response.data })
     }
 }
@@ -33,7 +33,7 @@ export const generatedCopyDogs=()=>{
 // trayendo toda la informacion de los temperamentos
 export const getAllTemperaments = () => {
     return async function (dispatch) {
-        const response = await axios.get(`${URL_BASE}/temperaments`)
+        const response = await axios.get(`/temperaments`)
         const allTemperamtsNames=[];
         response.data.map((temp)=> allTemperamtsNames.push(temp.name));
         dispatch({ type: GET_ALL_TEMPERAMENTS, payload: allTemperamtsNames })
@@ -43,7 +43,7 @@ export const getAllTemperaments = () => {
 //Esta action recibe el nombre a buscar
 export const filterSearchByName=(name)=>{
         return async function (dispatch) {
-            const search = await axios.get(`${URL_BASE}/dogs/names?name=${name}`);
+            const search = await axios.get(`/dogs/names?name=${name}`);
             dispatch({ type: FILTER_SEARCH_BY_NAME, payload: search.data })
         }
 }
