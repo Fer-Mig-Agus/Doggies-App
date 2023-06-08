@@ -13,6 +13,7 @@ import Pagination from '../components/Pagination';
 
 
 const HomePage = () => {
+	
 	const stateGlobal = useSelector((state) => state.dogs);
 	const dispatch = useDispatch();
 

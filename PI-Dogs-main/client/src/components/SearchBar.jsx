@@ -17,7 +17,8 @@ const SearchBar = () => {
 
 	//para el btn cuando hace click
 	const handleSearch=(event)=>{
-		event.preventDefault();		
+		event.preventDefault();
+		
 		dispatch(filterSearchByName(search));
 	}
 

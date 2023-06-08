@@ -11,44 +11,45 @@ import Nav from './components/Nav';
 import ErrorPage from './views/ErrorPage';
 
 import axios from "axios";
+const desarrollo = "http://localhost:3001";
+const produccion = "https://pi-dogs-production-1409.up.railway.app";
+axios.defaults.baseURL =produccion;
 
-axios.defaults.baseURL = "https://pi-dogs-production-1409.up.railway.app";
+  function App() {
 
-function App() {
+    const { pathname } = useLocation();
 
-  const {pathname}=useLocation();
+    const verificarRuta = () => {
 
-  const verificarRuta = () => {
-
-    switch (pathname) {
-      case "/": return false
-      case "/home": return true
-      case "/about": return true
-      case "/detail/:id": return false
-      case "/form": return true
-      default: return false;
+      switch (pathname) {
+        case "/": return false
+        case "/home": return true
+        case "/about": return true
+        case "/detail/:id": return false
+        case "/form": return true
+        default: return false;
+      }
     }
+
+
+    return (
+      <div className="App">
+
+        {verificarRuta() && <Nav />}
+
+        <Routes>
+
+          <Route path="/" element={<LeandingPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/form" element={<FormPage />} />
+          <Route path="//detail/:id" element={<DetailPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<ErrorPage />} />
+
+        </Routes>
+
+      </div>
+    );
   }
-
-
-  return (
-    <div className="App">
-      
-      {verificarRuta() && <Nav />}
-
-      <Routes>
-        
-        <Route path="/" element={<LeandingPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/form" element={<FormPage />} />
-        <Route path="//detail/:id" element={<DetailPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="*" element={<ErrorPage />} />
-
-      </Routes>
-
-    </div>
-  );
-}
 
 export default App;

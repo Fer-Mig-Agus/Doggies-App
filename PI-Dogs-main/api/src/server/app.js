@@ -7,7 +7,7 @@ const routes = require('../routes/index.js');
 require('../db/db.js');
 
 const server = express();
-const cors=require("cors")
+const cors = require("cors")
 
 server.name = 'API';
 
@@ -21,10 +21,11 @@ server.use(cookieParser());
 server.use(morgan('dev'));
 server.use(cors());
 
-const local ="http://localhost:3000"
-const versel = "https://pi-dogs-mf.vercel.app"
+const desarrollo = "http://localhost:3000"
+const produccion = "https://pi-dogs-mf.vercel.app"
+
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', versel); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Origin', produccion); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
